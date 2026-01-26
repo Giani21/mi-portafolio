@@ -32,7 +32,6 @@ export const BentoSkills = () => {
               idx === 0 ? 'md:col-span-2 md:row-span-2' : ''
             }`}
           >
-            {/* Gradient hover effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-purple-500/0 group-hover:from-cyan-500/5 group-hover:to-purple-500/5 transition-all duration-500" />
             
             <div className="relative z-10">

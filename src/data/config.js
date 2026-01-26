@@ -19,8 +19,8 @@ export const projects = [
 export const skills = [
   { 
     category: "Frontend",
-    iconName: "FaReact", // Solo el nombre
-    items: ["React", "Vue.js", "Tailwind CSS", "TypeScript", "HTML5", "CSS3", "JavaScript"] 
+    iconName: "FaReact", 
+    items: ["React", "Tailwind CSS", "TypeScript", "HTML5", "CSS3", "JavaScript"] 
   },
   { 
     category: "Backend",
@@ -38,9 +38,9 @@ export const skills = [
     items: ["Git", "GitHub", "GitLab", "Docker"] 
   },
   { 
-    category: "Automatización",
+    category: "Tooling",
     iconName: "FaCogs",
-    items: ["Python", "JavaScript"] 
+    items: ["VS Code", "Postman", "npm", "Yarn"] 
   },
 ];
 
