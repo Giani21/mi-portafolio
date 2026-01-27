@@ -1,13 +1,17 @@
+// src/components/Hero.jsx
 import React, { useRef, useState, useMemo } from 'react';
-import { motion, useSpring, useMotionValue } from 'framer-motion';
-import { FaReact, FaNodeJs, FaPalette, FaRocket, FaCogs } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaReact, FaNodeJs } from 'react-icons/fa';
 import { 
   SiTailwindcss, SiTypescript, SiHtml5, SiCss3, SiJavascript, 
   SiExpress, SiMysql, SiRedis, SiFigma, SiAdobephotoshop, 
   SiAdobeillustrator, SiGit, SiGithub, SiDocker, 
   SiPostman, SiNpm, SiYarn 
 } from 'react-icons/si';
-import { profile } from '../data/config';
+
+// --- NUEVAS IMPORTACIONES ---
+import { useLanguage } from '../context/LanguageContext';
+import { social } from '../data/config'; 
 
 const techIcons = [
   { Icon: FaReact, color: "text-cyan-400" },
@@ -30,16 +34,19 @@ const techIcons = [
 ];
 
 export const Hero = () => {
+  // --- USO DEL HOOK DE IDIOMA ---
+  const { t } = useLanguage();
+  
   const containerRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // 1. MEMOIZACIÓN PARA RENDIMIENTO: Evita que los iconos se regeneren
+  // MEMOIZACIÓN PARA RENDIMIENTO
   const techWaves = useMemo(() => {
     const shuffled = [...techIcons].sort(() => Math.random() - 0.5);
     return shuffled.map((item, i) => ({
       ...item,
       top: `${15 + (i * (70 / shuffled.length))}%`, 
-      duration: 45 + Math.random() * 20, // Velocidad fija y lenta
+      duration: 45 + Math.random() * 20, 
       delay: Math.random() * -60,
       size: 60 + Math.random() * 30, 
       opacity: 0.08 + Math.random() * 0.05, 
@@ -49,7 +56,6 @@ export const Hero = () => {
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    // Guardamos la posición solo para el panel de telemetría, no para los iconos
     setMousePos({ 
       x: e.clientX - rect.left - rect.width / 2, 
       y: e.clientY - rect.top - rect.height / 2 
@@ -62,11 +68,11 @@ export const Hero = () => {
       onMouseMove={handleMouseMove}
       className="min-h-screen bg-[#030712] text-white flex items-center justify-center relative overflow-hidden px-8 lg:px-24"
     >
-      {/* CAPA DE LUZ: Más dark pero con resplandor cian */}
+      {/* CAPA DE LUZ */}
       <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-cyan-900/10 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-blue-900/10 blur-[150px] rounded-full pointer-events-none" />
 
-      {/* OLEADAS DE TECNOLOGÍAS: Velocidad lineal pura (Sin lag de mouse) */}
+      {/* OLEADAS DE TECNOLOGÍAS */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         {techWaves.map((item, i) => (
           <motion.div
@@ -76,7 +82,7 @@ export const Hero = () => {
             transition={{ 
               duration: item.duration, 
               repeat: Infinity, 
-              ease: "linear", // Velocidad constante
+              ease: "linear", 
               delay: item.delay 
             }}
             style={{
@@ -110,44 +116,46 @@ export const Hero = () => {
           >
             <div className="mb-6 flex items-center gap-3">
               <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_#06b6d4]" />
+              {/* Uso de t.profile.role */}
               <span className="font-mono text-[10px] tracking-[0.5em] text-cyan-500/70 uppercase">
-                {profile.role} // ESTADO: ACTIVO
+                {t.profile.role} // STATUS: ACTIVE
               </span>
             </div>
 
             <h1 className="text-7xl md:text-9xl xl:text-[11rem] font-black leading-[0.8] tracking-tighter mb-10 text-white">
-              {profile.name.split(' ')[0]}
+              {/* Uso de t.profile.name y split para dividir nombre y apellido */}
+              {t.profile.name.split(' ')[0]}
               <br />
               <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
-                {profile.name.split(' ')[1]}
+                {t.profile.name.split(' ')[1]}
               </span>
             </h1>
 
             <div className="max-w-xl border-l border-white/10 pl-8 py-2">
               <p className="text-zinc-500 font-mono text-base md:text-lg leading-relaxed italic">
-                "{profile.description}"
+                "{t.profile.description}"
               </p>
             </div>
 
             <div className="mt-14 flex flex-wrap gap-6 font-mono">
               <motion.a
-                href={`mailto:${profile.email}`}
+                href={`mailto:${social.email}`} // Uso de social.email
                 whileHover={{ scale: 1.05, backgroundColor: "#fff", color: "#000" }}
                 className="px-10 py-4 border border-zinc-800 text-zinc-400 font-bold text-xs tracking-widest uppercase transition-all"
               >
-                / Init_Contact
+                / {t.profile.buttonContact}
               </motion.a>
               <button 
                 onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
                 className="px-10 py-4 bg-zinc-900/30 text-zinc-600 text-xs hover:text-white transition-all border border-transparent hover:border-zinc-800"
               >
-                [ Open_Stack ]
+                [ {t.profile.buttonStack} ]
               </button>
             </div>
           </motion.div>
         </div>
 
-        {/* LADO DERECHO: TERMINAL */}
+        {/* LADO DERECHO: TERMINAL (Se mantiene igual, la telemetría queda bien en inglés como 'System Language') */}
         <div className="lg:col-span-5 hidden lg:flex flex-col justify-center">
           <div className="border border-zinc-900 bg-black/40 backdrop-blur-xl p-10 rounded-sm relative overflow-hidden">
             <div className="flex justify-between items-center mb-10 border-b border-zinc-900 pb-4">

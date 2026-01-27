@@ -1,14 +1,33 @@
 import React from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { GlassDeviceSkills } from './components/GlassDeviceSkills';
+import { Projects } from './components/Projects';
+import { Footer } from './components/Footer'; // <--- IMPORTAR
 
 export default function App() {
   return (
-    <div className="bg-zinc-900 text-zinc-100 min-h-screen overflow-x-hidden">
-      <Navbar />
-      <Hero />
-      <GlassDeviceSkills />
-    </div>
+    <LanguageProvider>
+      <div className="bg-zinc-900 text-zinc-100 min-h-screen overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-100 flex flex-col"> {/* flex-col para asegurar que el footer baje */}
+        <Navbar />
+        
+        <main className="flex-grow"> {/* main wrapper para el contenido */}
+          <div id="home">
+            <Hero />
+          </div>
+
+          <div id="stack">
+            <GlassDeviceSkills />
+          </div>
+
+          <div id="projects">
+            <Projects />
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }

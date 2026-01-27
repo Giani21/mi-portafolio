@@ -1,16 +1,26 @@
 import React, { useState, useMemo } from 'react';
 import { FaReact, FaNodeJs, FaPalette, FaRocket, FaCogs } from 'react-icons/fa';
 import { skills as skillsData } from '../data/config';
+import { useLanguage } from '../context/LanguageContext';
 
 const iconMap = { FaReact, FaNodeJs, FaPalette, FaRocket, FaCogs };
 
 export const GlassDeviceSkills = () => {
+  const { t, language } = useLanguage();
   const [selectedId, setSelectedId] = useState(null);
 
   const selectedSkill = useMemo(
     () => skillsData.find(s => s.category === selectedId),
     [selectedId]
   );
+
+  const hudText = {
+    systemCore: language === 'es' ? 'Núcleo_Sistema // Módulos_v2.0' : 'System_Core // Modules_v2.0',
+    protocol: language === 'es' ? 'Protocolo_v4.2 // Cargando_Recursos' : 'Protocol_v4.2 // Loading_Assets',
+    dataStream: language === 'es' ? 'Flujo_Datos' : 'Data_Stream',
+    ready: language === 'es' ? 'LISTO_' : 'READY_',
+    close: language === 'es' ? '[ Cerrar_X ]' : '[ Close_X ]',
+  };
 
   return (
     <section className="py-32 px-6 min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center">
@@ -28,11 +38,15 @@ export const GlassDeviceSkills = () => {
           <div className="flex items-center gap-3 mb-4 animate-fadeInLeft">
             <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse-glow" />
             <span className="font-mono text-[10px] tracking-[0.5em] text-cyan-500/60 uppercase">
-              System_Core // Modules_v2.0
+              {hudText.systemCore}
             </span>
           </div>
           <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter italic uppercase leading-none">
-            TECH <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}>STACK</span>
+             {language === 'es' ? (
+                <>STACK <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}>TECNO</span></>
+             ) : (
+                <>TECH <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}>STACK</span></>
+             )}
           </h2>
           <div className="relative mt-6">
             <div className="h-[2px] bg-white/10 relative overflow-hidden animate-expandWidth">
@@ -51,9 +65,21 @@ export const GlassDeviceSkills = () => {
               style={{ animationDelay: `${index * 80}ms` }}
             >
               <GlassDeviceVisual category={skill.category} iconName={skill.iconName} hidden={selectedId === skill.category} />
+              
+              {/* --- REFLEJO CORREGIDO (SOLUCIÓN DEFINITIVA) --- */}
               {!selectedId && (
-                <div className="absolute top-[102%] left-0 w-full h-full pointer-events-none animate-floatReflection"
-                  style={{ transform: 'scaleY(-1)', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)', filter: 'blur(2px)', opacity: 0.7 }}>
+                <div 
+                  className="absolute top-full left-0 w-full h-full pointer-events-none"
+                  style={{ 
+                    transform: 'scaleY(-1)', 
+                    // CORRECCIÓN: Usamos 'to top'. 
+                    // 'black' al 0% (inicio del gradiente, que es bottom del elemento = pegado a la tarjeta)
+                    // 'transparent' al 30% (se desvanece rápido)
+                    maskImage: 'linear-gradient(to top, black 0%, transparent 30%)', 
+                    WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 30%)', 
+                    opacity: 0.5 
+                  }}
+                >
                   <GlassDeviceVisual category={skill.category} iconName={skill.iconName} />
                 </div>
               )}
@@ -71,11 +97,7 @@ export const GlassDeviceSkills = () => {
             
             {/* LADO IZQUIERDO: HUD PANEL */}
             <div className="w-1/2 flex flex-col items-center justify-center p-12 bg-gradient-to-br from-cyan-500/10 to-transparent border-r border-white/5 relative overflow-hidden group/hud">
-              
-              {/* Scan Vertical Láser - AHORA MÁS LENTO Y UNA SOLA VEZ */}
               <div className="absolute left-0 w-full h-[2px] z-20 bg-cyan-400/60 shadow-[0_0_15px_#22d3ee] animate-scanVerticalOnce" />
-              
-              {/* Esquinas de enfoque HUD */}
               <div className="absolute inset-12 pointer-events-none opacity-40">
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50" />
                 <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-500/50" />
@@ -83,18 +105,15 @@ export const GlassDeviceSkills = () => {
                 <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50" />
               </div>
 
-              {/* Texto lateral vertical decorativo */}
               <div className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-[7px] text-cyan-500/30 uppercase [writing-mode:vertical-lr] tracking-[1em]">
-                Protocol_v4.2 // Loading_Assets
+                {hudText.protocol}
               </div>
 
-              {/* Círculos de datos */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
                 <div className="w-64 h-64 border border-cyan-500/20 rounded-full animate-spin-slow" />
                 <div className="absolute w-72 h-72 border border-dashed border-cyan-500/10 rounded-full animate-spin-reverse-slow" />
               </div>
 
-              {/* Contenedor del Icono */}
               <div className="relative animate-glitchEntry">
                 <div className="absolute inset-0 blur-3xl bg-cyan-500/30 animate-pulse" />
                 {iconMap[selectedSkill.iconName] &&
@@ -115,21 +134,23 @@ export const GlassDeviceSkills = () => {
             {/* LADO DERECHO */}
             <div className="w-1/2 p-12 flex flex-col justify-center gap-4 bg-[#0a0c14]/50">
               <span className="font-mono text-[9px] text-zinc-500 tracking-[0.4em] mb-4 uppercase">
-                Data_Stream // {selectedSkill.category}
+                {hudText.dataStream} // {selectedSkill.category}
               </span>
               {selectedSkill.items.map((item, i) => (
                 <div
                   key={item}
                   className="flex justify-between border-b border-white/5 pb-2 hover:border-cyan-500/30 transition-colors group/item animate-slideInRight"
-                  style={{ animationDelay: `${200 + (i * 100)}ms` }} // Retrasado para esperar al escáner
+                  style={{ animationDelay: `${200 + (i * 100)}ms` }}
                 >
                   <span className="text-zinc-200 group-hover/item:text-white transition-colors">{item}</span>
-                  <span className="text-cyan-500/40 font-mono text-[10px] self-end italic">READY_</span>
+                  <span className="text-cyan-500/40 font-mono text-[10px] self-end italic">{hudText.ready}</span>
                 </div>
               ))}
             </div>
 
-            <button onClick={() => setSelectedId(null)} className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest">[ Close_X ]</button>
+            <button onClick={() => setSelectedId(null)} className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest">
+                {hudText.close}
+            </button>
           </div>
         </div>
       )}
@@ -142,19 +163,15 @@ export const GlassDeviceSkills = () => {
         @keyframes scanLine { from { left: -100%; } to { left: 100%; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scaleOut { to { opacity: 0; transform: scale(0.95); } }
-        @keyframes floatReflection { 0%, 100% { transform: scaleY(-1) translateY(0); } 50% { transform: scaleY(-1) translateY(8px); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes modalScale { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-        /* ESCANEO VERTICAL OPTIMIZADO: Más lento y suave */
         @keyframes scanVerticalOnce { 
           0% { top: -5%; opacity: 0; } 
           15% { opacity: 1; }
           85% { opacity: 1; }
           100% { top: 105%; opacity: 0; } 
         }
-
         @keyframes glitchEntry {
           0% { opacity: 0; transform: scale(1.1); filter: brightness(2); }
           10% { opacity: 0.5; transform: scale(0.98); }
@@ -179,7 +196,6 @@ export const GlassDeviceSkills = () => {
         .animate-scanLine { animation: scanLine 2.5s linear infinite; }
         .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; animation-fill-mode: both; }
         .animate-scaleOut { animation: scaleOut 0.3s ease-out forwards; }
-        .animate-floatReflection { animation: floatReflection 4s ease-in-out infinite; }
         .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
         .animate-modalScale { animation: modalScale 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         .animate-slideInRight { animation: slideInRight 0.5s ease-out forwards; animation-fill-mode: both; }
