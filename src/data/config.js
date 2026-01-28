@@ -52,8 +52,38 @@ export const content = {
         link: "https://github.com/Giani2110/MarketingReportes",
         image: "./projects/MarketingReportes.png",
         status: "Estable",
-      },
-    ]
+      }
+    ],
+    focus: {
+      title: "Enfoque",
+      subtitle: "Técnico",
+      cards: [
+        {
+          id: "01",
+          area: "Frontend Architecture",
+          title: "Experiencia de Usuario",
+          desc: "Desarrollo de interfaces reactivas y 'Pixel Perfect'. Priorizo la accesibilidad, animaciones fluidas (60fps) y diseño adaptable a cualquier dispositivo.",
+          tech: ["React", "Tailwind", "Framer Motion"],
+          image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+          id: "02",
+          area: "Backend Systems",
+          title: "Escalabilidad & Datos",
+          desc: "Diseño de APIs RESTful robustas y seguras. Implementación de bases de datos SQL optimizadas y gestión de estado en el servidor.",
+          tech: ["Node.js", "PostgreSQL", "Prisma"],
+          image: "https://imgs.search.brave.com/K15QBObQEyTm1jXe3RZ4Q-GGYPLwsVPwwFBNb4SrjwY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEyLzc2LzkzLzM4/LzM2MF9GXzEyNzY5/MzM4NDlfMVZxWDVZ/M0xUaDdkWlAzZUFI/dGM2QkpLemt0ZDAx/TkwuanBn"
+        },
+        {
+          id: "03",
+          area: "Performance",
+          title: "Optimización Core",
+          desc: "Mejora de tiempos de carga y SEO técnico. Estrategias de caché con Redis y optimización de assets para máxima velocidad.",
+          tech: ["Redis", "Lighthouse", "SEO"],
+          image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
+        }
+      ]
+    }
   },
   en: {
     profile: {
@@ -108,8 +138,38 @@ export const content = {
         link: "https://github.com/Giani2110/MarketingReportes",
         image: "./projects/MarketingReportes.png",
         status: "Stable",
-      },
-    ]
+      }
+    ],
+    focus: {
+      title: "Focus",
+      subtitle: "Engineering",
+      cards: [
+        {
+          id: "01",
+          area: "Frontend Architecture",
+          title: "User Experience",
+          desc: "Development of reactive and 'Pixel Perfect' interfaces. I prioritize accessibility, fluid animations (60fps), and responsive design.",
+          tech: ["React", "Tailwind", "Framer Motion"],
+          image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+          id: "02",
+          area: "Backend Systems",
+          title: "Scalability & Data",
+          desc: "Design of robust and secure RESTful APIs. Implementation of optimized SQL databases and server-side state management.",
+          tech: ["Node.js", "PostgreSQL", "Prisma"],
+          image: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=2000&auto=format&fit=crop"
+        },
+        {
+          id: "03",
+          area: "Performance",
+          title: "Core Optimization",
+          desc: "Improvement of load times and technical SEO. Caching strategies with Redis and asset optimization for maximum speed.",
+          tech: ["Redis", "Lighthouse", "SEO"],
+          image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
+        }
+      ]
+    }
   }
 };
 export const skills = [
