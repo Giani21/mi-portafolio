@@ -42,7 +42,6 @@ export const GlassDeviceSkills = () => {
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         <div className="mb-32 relative inline-block">
           <div className="flex items-center gap-3 mb-4 animate-fadeInLeft">
-            {/* Punto de pulso ahora en verde */}
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse-glow" />
             <span className="font-mono text-[10px] tracking-[0.5em] text-green-500/60 uppercase">
               {hudText.systemCore}
@@ -151,7 +150,6 @@ export const GlassDeviceSkills = () => {
       )}
 
       <style jsx>{`
-        /* Color de pulso cambiado a verde (#22c55e) */
         @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 10px #22c55e; } 50% { box-shadow: 0 0 20px #22c55e; } }
         @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes expandWidth { from { width: 0; } to { width: 100%; } }
@@ -165,7 +163,7 @@ export const GlassDeviceSkills = () => {
         @keyframes glitchEntry { 0% { opacity: 0; transform: scale(1.1); filter: brightness(2); } 10% { opacity: 0.5; transform: scale(0.98); } 20% { opacity: 1; transform: scale(1.02); filter: brightness(1); } 30% { transform: scale(1); } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .animate-scanVerticalOnce { animation: scanVerticalOnce 2.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; }
+        .animate-scanVerticalOnce { animation: scanVerticalOnce 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; }
         .animate-glitchEntry { animation: glitchEntry 0.6s ease-out forwards; }
         .animate-slideUpFade { animation: slideUpFade 0.6s ease-out 0.4s both; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }

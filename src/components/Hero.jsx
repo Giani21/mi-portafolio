@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaReact, FaNodeJs } from 'react-icons/fa';
 import { 
@@ -31,10 +31,41 @@ const techIcons = [
   { Icon: SiPostman, color: "text-orange-400" },
 ];
 
+const TelemetryGraph = () => {
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    const handleMove = () => setTick(t => t + 1);
+    window.addEventListener('mousemove', handleMove);
+    return () => window.removeEventListener('mousemove', handleMove);
+  }, []);
+
+  return (
+    <div className="pt-10 h-20 flex items-end gap-[4px]">
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={i}
+          animate={{ 
+            height: [
+              `${20 + Math.random() * 50}%`, 
+              `${10 + Math.random() * 80}%`, 
+              `${20 + Math.random() * 50}%`
+            ] 
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.1 }}
+          className="flex-1 bg-zinc-900"
+        />
+      ))}
+    </div>
+  );
+};
+
 export const Hero = () => {
   const { t } = useLanguage();
   const containerRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const bufferXRef = useRef(null);
+  const timeRef = useRef(null);
 
   const techWaves = useMemo(() => {
     const shuffled = [...techIcons].sort(() => Math.random() - 0.5);
@@ -49,13 +80,22 @@ export const Hero = () => {
   }, []);
 
   const handleMouseMove = (e) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !bufferXRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    setMousePos({ 
-      x: e.clientX - rect.left - rect.width / 2, 
-      y: e.clientY - rect.top - rect.height / 2 
-    });
+    const x = Math.round(e.clientX - rect.left - rect.width / 2);
+    bufferXRef.current.innerText = x;
   };
+
+  useEffect(() => {
+    const updateTime = () => {
+      if (timeRef.current) {
+        timeRef.current.innerText = new Date().toLocaleTimeString();
+      }
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section 
@@ -115,7 +155,6 @@ export const Hero = () => {
             </div>
 
             <div className="mt-14 flex flex-wrap gap-6 font-mono">
-              {/* BOTÓN ARREGLADO: Se quitó el scale:1.05 para que no cambie de tamaño */}
               <motion.a
                 href={`mailto:${social.email}`}
                 whileHover={{ backgroundColor: "#fff", color: "#000" }}
@@ -143,23 +182,15 @@ export const Hero = () => {
             <div className="font-mono text-[11px] space-y-4 text-zinc-600">
               <div className="flex justify-between italic">
                 <span className="text-green-500">BUFFER_X:</span>
-                <span className="text-zinc-400">{Math.round(mousePos.x)}</span>
+                <span ref={bufferXRef} className="text-zinc-400">0</span>
               </div>
               <div className="flex justify-between italic">
                 <span className="text-green-500">LOCAL_TIME:</span>
-                <span className="text-zinc-400">{new Date().toLocaleTimeString()}</span>
+                <span ref={timeRef} className="text-zinc-400">--:--:--</span>
               </div>
+          
+              <TelemetryGraph />
               
-              <div className="pt-10 h-20 flex items-end gap-[4px]">
-                {[...Array(20)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ height: [`${20 + Math.random() * 50}%`, `${10 + Math.random() * 80}%`, `${20 + Math.random() * 50}%`] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.1 }}
-                    className="flex-1 bg-zinc-900"
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>

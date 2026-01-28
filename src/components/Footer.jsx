@@ -18,7 +18,6 @@ export const Footer = () => {
 
   return (
     <footer className="relative bg-[#050505] pt-20 pb-10 overflow-hidden border-t border-white/5">
-      {/* --- DECORACIÓN DE FONDO (Corregido a Verde) --- */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-900 to-transparent" />
         <div className="absolute -top-[100px] left-1/4 w-[500px] h-[500px] bg-green-500/5 blur-[120px] rounded-full mix-blend-screen" />
@@ -27,7 +26,6 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           
-          {/* COLUMNA 1: IDENTIDAD */}
           <div className="md:col-span-5 space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-zinc-900 border border-white/10 flex items-center justify-center rounded-sm">
@@ -42,7 +40,6 @@ export const Footer = () => {
               {t.profile.description}
             </p>
             
-            {/* Status Indicator */}
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/5 border border-green-500/20 rounded-full">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -54,7 +51,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* COLUMNA 2: NAVEGACIÓN */}
           <div className="md:col-span-3">
             <h4 className="text-white font-bold mb-6 flex items-center gap-2">
               <span className="w-1 h-4 bg-green-500 rounded-sm" />
@@ -75,7 +71,6 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* COLUMNA 3: CONECTAR */}
           <div className="md:col-span-4">
             <h4 className="text-white font-bold mb-6 flex items-center gap-2">
               <span className="w-1 h-4 bg-purple-500 rounded-sm" />
@@ -88,7 +83,6 @@ export const Footer = () => {
               <SocialButton href={`mailto:${social.email}`} icon={FaEnvelope} label="Email" />
             </div>
 
-            {/* Decoración extra */}
             <div className="mt-8 p-4 bg-zinc-900/50 border border-white/5 rounded-sm">
               <code className="text-[10px] text-zinc-500 font-mono block">
                 $ git commit -m "Initial_Commit"<br/>
@@ -99,7 +93,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* --- BOTTOM BAR --- */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-zinc-500 text-xs font-mono">
             © {currentYear} Gianfranco Andreachi. {t.ui.footerRights || "All rights reserved"}.
@@ -110,7 +103,6 @@ export const Footer = () => {
   );
 };
 
-// Componente auxiliar para botones sociales (Corregido a Verde)
 const SocialButton = ({ href, icon: Icon, label }) => (
   <a 
     href={href}

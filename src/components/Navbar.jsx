@@ -44,13 +44,11 @@ export const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-colors duration-500 border-b ${isScrolled ? 'bg-[#030712]/80 backdrop-blur-md border-green-900/30 h-16' : 'bg-transparent border-transparent h-24'}`}>
-      
-      {/* Línea superior verde sutil */}
+
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-500/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center relative">
         
-        {/* --- IZQUIERDA: IDENTIDAD --- */}
         <div className="flex items-center gap-4 min-w-[150px]">
           <button onClick={() => scrollToSection('home')} className="group relative w-10 h-10 flex items-center justify-center bg-zinc-900/50 border border-white/10 rounded-sm overflow-hidden shrink-0">
              <div className="absolute inset-0 bg-green-500/10 scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-300" />
@@ -66,7 +64,6 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* --- CENTRO: NAVEGACIÓN --- */}
         <div className="absolute left-1/2 -translate-x-1/2 h-full flex items-center">
           <div className="flex items-center p-1 bg-zinc-900/30 border border-white/5 rounded-full backdrop-blur-sm gap-1">
             {navItems.map((item) => (
@@ -96,10 +93,8 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* --- DERECHA: CONTROLES --- */}
         <div className="flex items-center gap-4 md:gap-6 min-w-[150px] justify-end">
           
-          {/* 1. IDIOMA */}
           <button 
             onClick={toggleLanguage}
             className="group flex items-center gap-2 font-mono text-[10px] text-zinc-500 hover:text-white transition-colors"
@@ -119,10 +114,8 @@ export const Navbar = () => {
 
           <div className="w-[1px] h-4 bg-zinc-800 shrink-0" />
 
-          {/* 2. CONTACTO (ANCHO FIJO & VERDE) */}
           <a
             href={`mailto:${social.email}`}
-            // md:w-[160px] fija el ancho para evitar saltos. Eliminado transition-all para estabilidad.
             className="relative flex items-center justify-center w-9 h-9 md:w-[160px] md:px-5 md:py-2 bg-white/5 border border-white/10 rounded-sm group/contact overflow-hidden transition-colors duration-300 hover:border-green-500/50 hover:bg-green-500/10 shrink-0"
           >
              <div className="absolute inset-0 bg-green-400/20 translate-y-full group-hover/contact:translate-y-0 transition-transform duration-300" />

@@ -14,7 +14,7 @@ export const content = {
       stackSubtitle: "Tecnológico",
       totalEntries: "ENTRADAS_TOTALES",
       accessRepo: "Repositorio",
-      demoLive: "Ver Demo", // Nuevo botón
+      demoLive: "Ver Demo",
       status: "Estado",
       systemModules: "Módulos del Sistema",
       footerRights: "Todos los derechos reservados",
@@ -70,7 +70,7 @@ export const content = {
       stackSubtitle: "Stack",
       totalEntries: "TOTAL_ENTRIES",
       accessRepo: "Repository",
-      demoLive: "Live Demo", // Nuevo botón
+      demoLive: "Live Demo",
       status: "Status",
       systemModules: "System Modules",
       footerRights: "All rights reserved",
@@ -116,31 +116,31 @@ export const skills = [
   { 
     category: "Frontend",
     iconName: "FaReact", 
-    color: "cyan", // Color original o el que prefieras para Frontend
+    color: "cyan", 
     items: ["React", "Tailwind CSS", "TypeScript", "HTML5", "CSS3", "JavaScript"] 
   },
   { 
     category: "Backend",
     iconName: "FaNodeJs",
-    color: "yellow", // Backend -> Amarillo
+    color: "yellow",
     items: ["Node.js", "Express.js", "MySQL", "Redis", "REST APIs"] 
   },
   { 
     category: "UX/UI",
     iconName: "FaPalette",
-    color: "red", // Ui/Ux -> Rojo
+    color: "red",
     items: ["Figma", "Adobe Photoshop", "Adobe Illustrator"] 
   },
   { 
     category: "DevOps",
     iconName: "FaRocket",
-    color: "blue", // Devops -> Azul
+    color: "blue",
     items: ["Git", "GitHub", "GitLab", "Docker"] 
   },
   { 
     category: "Tooling",
     iconName: "FaCogs",
-    color: "violet", // Tools -> Violeta
+    color: "violet",
     items: ["VS Code", "Postman", "npm", "Yarn"] 
   },
 ];
