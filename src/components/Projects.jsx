@@ -8,7 +8,7 @@ export const Projects = () => {
   const projects = t.projects;
 
   return (
-    <section className="min-h-screen bg-[#030712] py-32 px-6 relative overflow-hidden">
+    <section className="min-h-screen bg-[#030712] py-32 px-6 relative overflow-hidden" id="projects">
       {/* --- FONDO AMBIENTAL --- */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.05),transparent_70%)] pointer-events-none" />
       
@@ -18,8 +18,8 @@ export const Projects = () => {
         <div className="mb-24 flex flex-col md:flex-row items-end justify-between gap-6 border-b border-white/5 pb-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 bg-cyan-500 rounded-sm animate-pulse" />
-              <span className="font-mono text-[10px] text-cyan-500 tracking-[0.4em] uppercase">
+              <span className="w-2 h-2 bg-green-500 rounded-sm animate-pulse" />
+              <span className="font-mono text-[10px] text-green-500 tracking-[0.4em] uppercase">
                 Secure_Archives // Directory
               </span>
             </div>
@@ -27,7 +27,9 @@ export const Projects = () => {
               {t.ui.projectsTitle} <span className="text-transparent stroke-text">{t.ui.projectsSubtitle}</span>
             </h2>
           </div>
-          <div className="font-mono text-xs text-zinc-500 text-right hidden md:block">
+          
+          {/* CAMBIO: Textos de estado y conteo a verde */}
+          <div className="font-mono text-xs text-green-500 text-right hidden md:block">
             <p>{t.ui.totalEntries}: {projects.length.toString().padStart(2, '0')}</p>
             <p>ZYNC_STATUS: ONLINE</p>
           </div>
@@ -69,11 +71,13 @@ const ProjectScreen = ({ project, index, t }) => {
              <div className="w-2 h-2 rounded-full bg-yellow-500/20 group-hover:bg-yellow-500 transition-colors" />
              <div className="w-2 h-2 rounded-full bg-green-500/20 group-hover:bg-green-500 transition-colors" />
            </div>
-           <span className="ml-2 font-mono text-[9px] text-zinc-600 uppercase tracking-widest group-hover:text-cyan-500/70 transition-colors">
+           {/* Subtítulo estilo sistema */}
+           <span className="ml-2 font-mono text-[9px] text-zinc-600 uppercase tracking-widest group-hover:text-green-500/70 transition-colors">
              {project.subtitle}
            </span>
         </div>
-        <div className="font-mono text-[9px] text-zinc-700">ID: {String(project.id).padStart(3, '0')}</div>
+        {/* CAMBIO: ID a verde oscuro/consola */}
+        <div className="font-mono text-[9px] text-green-500/60">ID: {String(project.id).padStart(3, '0')}</div>
       </div>
 
       {/* --- CONTENEDOR DE IMAGEN (EL MONITOR) --- */}
@@ -100,7 +104,7 @@ const ProjectScreen = ({ project, index, t }) => {
 
         {/* --- CONTENIDO SUPERPUESTO (INFORMACIÓN) --- */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
-          {/* Gradiente de legibilidad siempre presente pero más fuerte en hover */}
+          {/* Gradiente de legibilidad */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 transition-all duration-500" 
                style={{ transform: isHovered ? 'translateY(0)' : 'translateY(20%)' }} />
 
@@ -119,7 +123,7 @@ const ProjectScreen = ({ project, index, t }) => {
               {project.title}
             </h3>
 
-            {/* DESCRIPCIÓN (Se expande en hover) */}
+            {/* DESCRIPCIÓN */}
             <div className={`overflow-hidden transition-all duration-500 ${isHovered ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'}`}>
                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
                  {project.description}
@@ -136,7 +140,6 @@ const ProjectScreen = ({ project, index, t }) => {
                >
                  <FaGithub /> {t.ui.accessRepo}
                </a>
-               {/* Si tuvieras demo link, podrías ponerlo aquí */}
             </div>
           </div>
         </div>

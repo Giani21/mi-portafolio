@@ -4,7 +4,7 @@ export const content = {
       name: "Gianfranco Andreachi",
       role: "Desarrollador Full-Stack",
       description: "Diseño aplicaciones escalables y optimizo la experiencia de usuario, transformando requerimientos de negocio en soluciones digitales eficientes.",
-      buttonContact: "Iniciar Contacto",
+      buttonContact: "Iniciar_Contacto",
       buttonStack: "Ver Tecnologías"
     },
     ui: {
@@ -30,8 +30,7 @@ export const content = {
         description: "Plataforma gastronómica multiplataforma que conecta restaurantes y usuarios en casa.",
         tags: ["React", "Node.js", "Redis", "WebSockets"],
         link: "https://github.com/Giani2110/DualEat-Web",
-        // Pone aquí la ruta a tu imagen real, ej: "/projects/dualeat.jpg"
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop", 
+        image: "./projects/DualEat.png", 
         status: "Producción",
       },
       {
@@ -41,7 +40,7 @@ export const content = {
         description: "Plataforma virtual para gamers, ofrece catálogo de juegos y servicios en línea.",
         tags: ["React", "Tailwind", "MySQL", "Prisma"],
         link: "https://github.com/Giani2110/HyperG",
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
+        image: "./projects/HyperG.png",
         status: "Beta_v1.2",
       },
       {
@@ -51,7 +50,7 @@ export const content = {
         description: "Sistema para empresas de marketing, genera reportes automáticos de productos.",
         tags: ["TypeScript", "Prisma", "Rest APIs"],
         link: "https://github.com/Giani2110/MarketingReportes",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+        image: "./projects/MarketingReportes.png",
         status: "Estable",
       },
     ]
@@ -87,7 +86,7 @@ export const content = {
         description: "Cross-platform dining solution connecting restaurants with home users.",
         tags: ["React", "Node.js", "Redis", "WebSockets"],
         link: "https://github.com/Giani2110/DualEat-Web",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop",
+        image: "./projects/DualEat.png",
         status: "Production",
       },
       {
@@ -97,7 +96,7 @@ export const content = {
         description: "Virtual gamer platform offering a game catalog and online services.",
         tags: ["React", "Tailwind", "MySQL", "Prisma"],
         link: "https://github.com/Giani2110/HyperG",
-        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
+        image: "./projects/HyperG.png",
         status: "Beta_v1.2",
       },
       {
@@ -107,37 +106,41 @@ export const content = {
         description: "Analytics system for marketing firms, generating automated product reports.",
         tags: ["TypeScript", "Prisma", "Rest APIs"],
         link: "https://github.com/Giani2110/MarketingReportes",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+        image: "./projects/MarketingReportes.png",
         status: "Stable",
       },
     ]
   }
 };
-
 export const skills = [
   { 
     category: "Frontend",
     iconName: "FaReact", 
+    color: "cyan", // Color original o el que prefieras para Frontend
     items: ["React", "Tailwind CSS", "TypeScript", "HTML5", "CSS3", "JavaScript"] 
   },
   { 
     category: "Backend",
     iconName: "FaNodeJs",
+    color: "yellow", // Backend -> Amarillo
     items: ["Node.js", "Express.js", "MySQL", "Redis", "REST APIs"] 
   },
   { 
     category: "UX/UI",
     iconName: "FaPalette",
+    color: "red", // Ui/Ux -> Rojo
     items: ["Figma", "Adobe Photoshop", "Adobe Illustrator"] 
   },
   { 
     category: "DevOps",
     iconName: "FaRocket",
+    color: "blue", // Devops -> Azul
     items: ["Git", "GitHub", "GitLab", "Docker"] 
   },
   { 
     category: "Tooling",
     iconName: "FaCogs",
+    color: "violet", // Tools -> Violeta
     items: ["VS Code", "Postman", "npm", "Yarn"] 
   },
 ];

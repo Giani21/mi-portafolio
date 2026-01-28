@@ -1,4 +1,3 @@
-// src/components/Hero.jsx
 import React, { useRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { FaReact, FaNodeJs } from 'react-icons/fa';
@@ -9,7 +8,6 @@ import {
   SiPostman, SiNpm, SiYarn 
 } from 'react-icons/si';
 
-// --- NUEVAS IMPORTACIONES ---
 import { useLanguage } from '../context/LanguageContext';
 import { social } from '../data/config'; 
 
@@ -34,13 +32,10 @@ const techIcons = [
 ];
 
 export const Hero = () => {
-  // --- USO DEL HOOK DE IDIOMA ---
   const { t } = useLanguage();
-  
   const containerRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // MEMOIZACIÓN PARA RENDIMIENTO
   const techWaves = useMemo(() => {
     const shuffled = [...techIcons].sort(() => Math.random() - 0.5);
     return shuffled.map((item, i) => ({
@@ -68,28 +63,17 @@ export const Hero = () => {
       onMouseMove={handleMouseMove}
       className="min-h-screen bg-[#030712] text-white flex items-center justify-center relative overflow-hidden px-8 lg:px-24"
     >
-      {/* CAPA DE LUZ */}
       <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-cyan-900/10 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-blue-900/10 blur-[150px] rounded-full pointer-events-none" />
 
-      {/* OLEADAS DE TECNOLOGÍAS */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         {techWaves.map((item, i) => (
           <motion.div
             key={i}
             initial={{ x: '120vw' }}
             animate={{ x: '-120vw' }}
-            transition={{ 
-              duration: item.duration, 
-              repeat: Infinity, 
-              ease: "linear", 
-              delay: item.delay 
-            }}
-            style={{
-              position: 'absolute',
-              top: item.top,
-              opacity: item.opacity,
-            }}
+            transition={{ duration: item.duration, repeat: Infinity, ease: "linear", delay: item.delay }}
+            style={{ position: 'absolute', top: item.top, opacity: item.opacity }}
             className={`${item.color} flex items-center justify-center`}
           >
             {item.Icon && <item.Icon size={item.size} />}
@@ -97,17 +81,12 @@ export const Hero = () => {
         ))}
       </div>
 
-      {/* GRID SUTIL */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-        style={{ 
-          backgroundImage: `radial-gradient(circle, #fff 1px, transparent 1px)`,
-          backgroundSize: '100px 100px'
-        }} 
+        style={{ backgroundImage: `radial-gradient(circle, #fff 1px, transparent 1px)`, backgroundSize: '100px 100px' }} 
       />
 
       <div className="w-full max-w-[1600px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
         
-        {/* LADO IZQUIERDO: TEXTO */}
         <div className="lg:col-span-7">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -115,15 +94,13 @@ export const Hero = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="mb-6 flex items-center gap-3">
-              <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_#06b6d4]" />
-              {/* Uso de t.profile.role */}
-              <span className="font-mono text-[10px] tracking-[0.5em] text-cyan-500/70 uppercase">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
+              <span className="font-mono text-[10px] tracking-[0.5em] text-green-500/70 uppercase">
                 {t.profile.role} // STATUS: ACTIVE
               </span>
             </div>
 
             <h1 className="text-7xl md:text-9xl xl:text-[11rem] font-black leading-[0.8] tracking-tighter mb-10 text-white">
-              {/* Uso de t.profile.name y split para dividir nombre y apellido */}
               {t.profile.name.split(' ')[0]}
               <br />
               <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
@@ -138,9 +115,10 @@ export const Hero = () => {
             </div>
 
             <div className="mt-14 flex flex-wrap gap-6 font-mono">
+              {/* BOTÓN ARREGLADO: Se quitó el scale:1.05 para que no cambie de tamaño */}
               <motion.a
-                href={`mailto:${social.email}`} // Uso de social.email
-                whileHover={{ scale: 1.05, backgroundColor: "#fff", color: "#000" }}
+                href={`mailto:${social.email}`}
+                whileHover={{ backgroundColor: "#fff", color: "#000" }}
                 className="px-10 py-4 border border-zinc-800 text-zinc-400 font-bold text-xs tracking-widest uppercase transition-all"
               >
                 / {t.profile.buttonContact}
@@ -155,21 +133,20 @@ export const Hero = () => {
           </motion.div>
         </div>
 
-        {/* LADO DERECHO: TERMINAL (Se mantiene igual, la telemetría queda bien en inglés como 'System Language') */}
         <div className="lg:col-span-5 hidden lg:flex flex-col justify-center">
           <div className="border border-zinc-900 bg-black/40 backdrop-blur-xl p-10 rounded-sm relative overflow-hidden">
             <div className="flex justify-between items-center mb-10 border-b border-zinc-900 pb-4">
-              <span className="font-mono text-[9px] text-zinc-700 tracking-widest uppercase">Telemetry_System</span>
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500/40" />
+              <span className="font-mono text-[9px] text-green-500 tracking-widest uppercase">Telemetry_System</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500/40" />
             </div>
 
             <div className="font-mono text-[11px] space-y-4 text-zinc-600">
               <div className="flex justify-between italic">
-                <span>BUFFER_X:</span>
+                <span className="text-green-500">BUFFER_X:</span>
                 <span className="text-zinc-400">{Math.round(mousePos.x)}</span>
               </div>
               <div className="flex justify-between italic">
-                <span>LOCAL_TIME:</span>
+                <span className="text-green-500">LOCAL_TIME:</span>
                 <span className="text-zinc-400">{new Date().toLocaleTimeString()}</span>
               </div>
               

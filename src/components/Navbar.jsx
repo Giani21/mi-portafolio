@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { social } from '../data/config';
 import { FaTerminal, FaCode, FaFolder, FaHome, FaEnvelope } from 'react-icons/fa';
@@ -9,12 +9,10 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
 
-  // Detectar scroll para efectos visuales
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       
-      // Lógica simple para detectar sección activa (Spy Scroll)
       const stackSection = document.getElementById('stack');
       const projectSection = document.getElementById('projects');
       
@@ -30,7 +28,6 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Función de navegación suave
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -39,7 +36,6 @@ export const Navbar = () => {
     }
   };
 
-  // Textos de navegación según idioma
   const navItems = [
     { id: 'home', label: language === 'es' ? 'INICIO' : 'HOME', icon: FaHome },
     { id: 'stack', label: language === 'es' ? 'TECNOLOGÍAS' : 'STACK', icon: FaCode },
@@ -47,40 +43,38 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 border-b ${isScrolled ? 'bg-[#030712]/80 backdrop-blur-md border-cyan-900/30 h-16' : 'bg-transparent border-transparent h-24'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-colors duration-500 border-b ${isScrolled ? 'bg-[#030712]/80 backdrop-blur-md border-green-900/30 h-16' : 'bg-transparent border-transparent h-24'}`}>
       
-      {/* Línea de energía superior */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+      {/* Línea superior verde sutil */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-500/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center relative">
         
         {/* --- IZQUIERDA: IDENTIDAD --- */}
-        <div className="flex items-center gap-4">
-          <button onClick={() => scrollToSection('home')} className="group relative w-10 h-10 flex items-center justify-center bg-zinc-900/50 border border-white/10 rounded-sm overflow-hidden">
-             <div className="absolute inset-0 bg-cyan-500/10 scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-300" />
-             <FaTerminal className="text-zinc-400 group-hover:text-cyan-400 transition-colors z-10" />
-             {/* Indicador de actividad */}
-             <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+        <div className="flex items-center gap-4 min-w-[150px]">
+          <button onClick={() => scrollToSection('home')} className="group relative w-10 h-10 flex items-center justify-center bg-zinc-900/50 border border-white/10 rounded-sm overflow-hidden shrink-0">
+             <div className="absolute inset-0 bg-green-500/10 scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-300" />
+             <FaTerminal className="text-zinc-400 group-hover:text-green-400 transition-colors z-10" />
+             <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
           </button>
           
           <div className="hidden md:flex flex-col">
-            <span className="font-mono text-[9px] text-zinc-500 tracking-[0.3em] uppercase">System_Op</span>
-            <span className="font-bold text-xs text-white tracking-widest group-hover:text-cyan-400 transition-colors">
+            <span className="font-mono text-[9px] text-green-500 tracking-[0.3em] uppercase">System_Op</span>
+            <span className="font-bold text-xs text-white tracking-widest transition-colors">
               {t.profile.name.split(' ')[0]}
             </span>
           </div>
         </div>
 
-        {/* --- CENTRO: NAVEGACIÓN HOLOGRÁFICA --- */}
+        {/* --- CENTRO: NAVEGACIÓN --- */}
         <div className="absolute left-1/2 -translate-x-1/2 h-full flex items-center">
           <div className="flex items-center p-1 bg-zinc-900/30 border border-white/5 rounded-full backdrop-blur-sm gap-1">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="relative px-6 py-2 rounded-full font-mono text-[10px] font-bold tracking-widest transition-colors z-10 group"
+                className="relative px-4 py-2 rounded-full font-mono text-[10px] font-bold tracking-widest transition-all z-10 group min-w-[100px] md:min-w-[120px] flex justify-center items-center"
               >
-                {/* Fondo activo (Cursor Láser) */}
                 {activeTab === item.id && (
                   <motion.div
                     layoutId="activeTab"
@@ -89,55 +83,53 @@ export const Navbar = () => {
                   />
                 )}
 
-                {/* Texto e Icono */}
                 <span className={`relative z-10 flex items-center gap-2 ${activeTab === item.id ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
-                  <item.icon className={`text-[10px] ${activeTab === item.id ? 'text-cyan-400' : 'opacity-0 group-hover:opacity-50 transition-opacity'}`} />
-                  {item.label}
+                  <item.icon className={`text-[10px] shrink-0 ${activeTab === item.id ? 'text-green-400' : 'opacity-0 group-hover:opacity-50 transition-opacity'}`} />
+                  <span className="whitespace-nowrap">{item.label}</span>
                 </span>
 
-                {/* Brillo inferior al activo */}
                 {activeTab === item.id && (
-                  <div className="absolute bottom-0 left-1/4 w-1/2 h-[1px] bg-cyan-500 shadow-[0_0_5px_#22d3ee]" />
+                  <div className="absolute bottom-0 left-1/4 w-1/2 h-[1px] bg-green-500 shadow-[0_0_5px_#22c55e]" />
                 )}
               </button>
             ))}
           </div>
         </div>
 
-        {/* --- DERECHA: CONTROLES DE SISTEMA --- */}
-        <div className="flex items-center gap-4 md:gap-6">
+        {/* --- DERECHA: CONTROLES --- */}
+        <div className="flex items-center gap-4 md:gap-6 min-w-[150px] justify-end">
           
-          {/* 1. IDIOMA (Minimalista & Técnico) */}
+          {/* 1. IDIOMA */}
           <button 
             onClick={toggleLanguage}
             className="group flex items-center gap-2 font-mono text-[10px] text-zinc-500 hover:text-white transition-colors"
           >
-            <span className="uppercase tracking-widest hidden md:inline">LANG:</span>
-            <div className="flex items-center bg-zinc-900 border border-white/10 px-2 py-1 rounded-sm relative overflow-hidden">
-               {/* Fondo de selección */}
+            <span className="uppercase tracking-widest hidden lg:inline text-green-500 shrink-0">LANG:</span>
+            <div className="flex items-center bg-zinc-900 border border-white/10 px-2 py-1 rounded-sm relative overflow-hidden w-14 justify-center">
                <motion.div 
                  className="absolute top-0 bottom-0 bg-white/10 w-1/2"
                  animate={{ left: language === 'es' ? '0%' : '50%' }}
                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
                />
-               
-               <span className={`relative z-10 px-1 transition-colors ${language === 'es' ? 'text-cyan-400 font-bold' : 'text-zinc-600'}`}>ES</span>
+               <span className={`relative z-10 px-1 transition-colors ${language === 'es' ? 'text-green-400 font-bold' : 'text-zinc-600'}`}>ES</span>
                <span className="text-zinc-700">/</span>
-               <span className={`relative z-10 px-1 transition-colors ${language === 'en' ? 'text-cyan-400 font-bold' : 'text-zinc-600'}`}>EN</span>
+               <span className={`relative z-10 px-1 transition-colors ${language === 'en' ? 'text-green-400 font-bold' : 'text-zinc-600'}`}>EN</span>
             </div>
           </button>
 
-          {/* Separador */}
-          <div className="w-[1px] h-4 bg-zinc-800" />
+          <div className="w-[1px] h-4 bg-zinc-800 shrink-0" />
 
-          {/* 2. CONTACTO (Botón Sólido) */}
+          {/* 2. CONTACTO (ANCHO FIJO & VERDE) */}
           <a
             href={`mailto:${social.email}`}
-            className="relative flex items-center justify-center w-9 h-9 md:w-auto md:px-5 md:py-2 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/50 rounded-sm transition-all group/contact overflow-hidden"
+            // md:w-[160px] fija el ancho para evitar saltos. Eliminado transition-all para estabilidad.
+            className="relative flex items-center justify-center w-9 h-9 md:w-[160px] md:px-5 md:py-2 bg-white/5 border border-white/10 rounded-sm group/contact overflow-hidden transition-colors duration-300 hover:border-green-500/50 hover:bg-green-500/10 shrink-0"
           >
-             <div className="absolute inset-0 bg-cyan-400/20 translate-y-full group-hover/contact:translate-y-0 transition-transform duration-300" />
-             <FaEnvelope className="text-zinc-400 group-hover/contact:text-cyan-400 md:hidden relative z-10" />
-             <span className="hidden md:block font-mono text-[10px] font-bold text-zinc-300 group-hover/contact:text-white uppercase tracking-widest relative z-10">
+             <div className="absolute inset-0 bg-green-400/20 translate-y-full group-hover/contact:translate-y-0 transition-transform duration-300" />
+             
+             <FaEnvelope className="text-zinc-400 group-hover/contact:text-green-400 md:hidden relative z-10" />
+             
+             <span className="hidden md:block font-mono text-[10px] font-bold text-zinc-300 group-hover/contact:text-white uppercase tracking-widest relative z-10 whitespace-nowrap">
                {t.profile.buttonContact}
              </span>
           </a>
