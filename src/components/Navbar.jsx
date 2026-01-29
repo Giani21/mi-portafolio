@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { social } from '../data/config';
-import { FaTerminal, FaCode, FaFolder, FaHome, FaEnvelope } from 'react-icons/fa';
+import { FaCode, FaFolder, FaHome, FaEnvelope } from 'react-icons/fa';
+import logo from '../../src/assets/Logo.png';
 
 export const Navbar = () => {
   const { language, toggleLanguage, t } = useLanguage();
@@ -52,7 +53,7 @@ export const Navbar = () => {
         <div className="flex items-center gap-4 min-w-[150px]">
           <button onClick={() => scrollToSection('home')} className="group relative w-10 h-10 flex items-center justify-center bg-zinc-900/50 border border-white/10 rounded-sm overflow-hidden shrink-0">
              <div className="absolute inset-0 bg-green-500/10 scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-300" />
-             <FaTerminal className="text-zinc-400 group-hover:text-green-400 transition-colors z-10" />
+              <img src={logo} alt="Logo" className="w-6 h-6 mr-1 relative scale-100 group-hover:scale-110 transition-transform duration-300" />
              <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
           </button>
           
