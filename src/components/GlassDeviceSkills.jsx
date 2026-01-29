@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { FaReact, FaNodeJs, FaPalette, FaRocket, FaCogs } from 'react-icons/fa';
+import { FaReact, FaServer, FaPalette, FaRocket, FaCogs } from 'react-icons/fa';
 import { skills as skillsData } from '../data/config';
 import { useLanguage } from '../context/LanguageContext';
 
-const iconMap = { FaReact, FaNodeJs, FaPalette, FaRocket, FaCogs };
+const iconMap = { FaReact, FaServer, FaPalette, FaRocket, FaCogs };
 
 const categoryColors = {
   "Frontend": "cyan",
@@ -149,7 +149,7 @@ export const GlassDeviceSkills = () => {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 10px #22c55e; } 50% { box-shadow: 0 0 20px #22c55e; } }
         @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes expandWidth { from { width: 0; } to { width: 100%; } }

@@ -20,7 +20,9 @@ export const content = {
       footerRights: "Todos los derechos reservados",
       footerConnect: "Conectar",
       footerNav: "Navegación",
-      serverStatus: "SISTEMAS ONLINE"
+      serverStatus: "SISTEMAS ONLINE",
+      prevSection: "SEC_ANT",
+      nextSection: "SEC_SIG"
     },
     projects: [
       {
@@ -51,6 +53,26 @@ export const content = {
         tags: ["TypeScript", "Prisma", "Rest APIs"],
         link: "https://github.com/Giani2110/MarketingReportes",
         image: "./projects/MarketingReportes.png",
+        status: "Estable",
+      },
+      {
+        id: 4,
+        title: "Yenny",
+        subtitle: "Gestion de Libreria",
+        description: "Sistema de gestión de libreria para prestar libros y catalogo.",
+        tags: ["React", "Tailwind", "MySQL", "Python", "Flask"],
+        link: "https://github.com/Galoniax/24.2_AMS-TP",
+        image: "./projects/Yenny.png",
+        status: "Estable",
+      },
+      {
+        id: 5,
+        title: "Vital Serenity",
+        subtitle: "Desarrollo Web",
+        description: "Plataforma virtual para consulta de servicios de salud.",
+        tags: ["Laravel", "Tailwind", "MySQL", "PHP"],
+        link: "https://github.com/Galoniax/24.2_AMS-TP",
+        image: "./projects/VitalSerenity.png",
         status: "Estable",
       }
     ],
@@ -106,7 +128,9 @@ export const content = {
       footerRights: "All rights reserved",
       footerConnect: "Connect",
       footerNav: "Navigation",
-      serverStatus: "SYSTEMS ONLINE"
+      serverStatus: "SYSTEMS ONLINE",
+      prevSection: "PREV_SEC",
+      nextSection: "NEXT_SEC",
     },
     projects: [
       {
@@ -137,6 +161,26 @@ export const content = {
         tags: ["TypeScript", "Prisma", "Rest APIs"],
         link: "https://github.com/Giani2110/MarketingReportes",
         image: "./projects/MarketingReportes.png",
+        status: "Stable",
+      },
+      {
+        id: 4,
+        title: "Yenny",
+        subtitle: "Library Management",
+        description: "Library management system for book lending and catalog.",
+        tags: ["React", "Tailwind", "MySQL", "Python", "Flask"],
+        link: "https://github.com/Galoniax/24.2_AMS-TP",
+        image: "./projects/Yenny.png",
+        status: "Stable",
+      },
+      {
+        id: 5,
+        title: "Vital Serenity",
+        subtitle: "Web Development",
+        description: "Virtual health services platform for consultation.",
+        tags: ["Laravel", "Tailwind", "MySQL", "PHP"],
+        link: "https://github.com/Galoniax/24.2_AMS-TP",
+        image: "./projects/VitalSerenity.png",
         status: "Stable",
       }
     ],
@@ -181,7 +225,7 @@ export const skills = [
   },
   { 
     category: "Backend",
-    iconName: "FaNodeJs",
+    iconName: "FaServer",
     color: "yellow",
     items: ["Node.js", "Express.js", "MySQL", "Redis", "REST APIs"] 
   },
