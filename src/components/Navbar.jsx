@@ -14,10 +14,14 @@ export const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       
-      const stackSection = document.getElementById('stack');
+      const contactSection = document.getElementById('contact');
       const projectSection = document.getElementById('projects');
+      const stackSection = document.getElementById('stack');
       
-      if (projectSection && window.scrollY >= projectSection.offsetTop - 300) {
+      // El orden importa: de abajo hacia arriba de la página
+      if (contactSection && window.scrollY >= contactSection.offsetTop - 400) {
+        setActiveTab('contact');
+      } else if (projectSection && window.scrollY >= projectSection.offsetTop - 300) {
         setActiveTab('projects');
       } else if (stackSection && window.scrollY >= stackSection.offsetTop - 300) {
         setActiveTab('stack');
@@ -25,6 +29,7 @@ export const Navbar = () => {
         setActiveTab('home');
       }
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -41,6 +46,7 @@ export const Navbar = () => {
     { id: 'home', label: language === 'es' ? 'INICIO' : 'HOME', icon: FaHome },
     { id: 'stack', label: language === 'es' ? 'TECNOLOGÍAS' : 'STACK', icon: FaCode },
     { id: 'projects', label: language === 'es' ? 'PROYECTOS' : 'PROJECTS', icon: FaFolder },
+    { id: 'contact', label: language === 'es' ? 'CONTACTO' : 'CONTACT', icon: FaEnvelope },
   ];
 
   return (

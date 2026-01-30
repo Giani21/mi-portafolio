@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { GlassDeviceSkills } from './components/GlassDeviceSkills';
 import { Projects } from './components/Projects';
 import { FocusAccordion } from './components/FocusAccordion';
+import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -28,6 +29,10 @@ export default function App() {
 
           <div id="focus">
             <FocusAccordion />
+          </div>
+
+          <div id="contact">
+            <Contact />
           </div>
         </main>
 
