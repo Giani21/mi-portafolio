@@ -222,31 +222,51 @@ export const skills = [
     category: "Frontend",
     iconName: "FaReact", 
     color: "cyan", 
+    description: {
+      es: "Desarrollo de interfaces interactivas y visuales. Me enfoco en la velocidad, accesibilidad y que tu sitio se vea increíble en cualquier pantalla.",
+      en: "Development of interactive and visual interfaces. I focus on speed, accessibility, and making sure your site looks amazing on any screen."
+    },
     items: ["React", "Tailwind CSS", "Bootstrap", "HTML5", "CSS3", "JavaScript"] 
   },
   { 
     category: "Backend",
     iconName: "FaServer",
     color: "yellow",
+    description: {
+      es: "La lógica y el cerebro de la aplicación. Manejo bases de datos escalables y servidores seguros para proteger la información de tu negocio.",
+      en: "The logic and brain of the application. I manage scalable databases and secure servers to protect your business information."
+    },
     items: ["Express.js", "MySQL/PostgreSQL", "Java", "Python", "PHP"] 
   },
   { 
     category: "UX/UI",
     iconName: "FaPalette",
     color: "red",
+    description: {
+      es: "Diseño centrado en el usuario. Creo prototipos y experiencias fluidas para que navegar por tu web sea intuitivo y profesional.",
+      en: "User-centered design. I create prototypes and smooth experiences so that navigating your web is intuitive and professional."
+    },
     items: ["Figma", "Adobe Photoshop", "Adobe Illustrator", "Adobe XD", "Adobe After Effects", "Framer Motion"] 
   },
   { 
     category: "DevOps",
     iconName: "FaRocket",
     color: "blue",
+    description: {
+      es: "Automatización y despliegue. Me aseguro de que el código llegue a producción de forma estable usando metodologías ágiles.",
+      en: "Automation and deployment. I ensure that code reaches production stably using agile methodologies."
+    },
     items: ["Git", "GitHub", "GitLab", "Docker", "Trello", "SCRUM"] 
   },
   { 
     category: "Tooling",
     iconName: "FaCogs",
     color: "violet",
-    items: ["Visual Studio Code", "Postman", "Android Studio", "DBeaver/MySQL Workbench", "Eclipse/IntelliJ IDEA"] 
+    description: {
+      es: "Entorno de desarrollo y diagnóstico. Utilizo herramientas avanzadas para garantizar la calidad del software y pruebas de rendimiento.",
+      en: "Development and diagnostic environment. I use advanced tools to guarantee software quality and performance testing."
+    },
+    items: ["VS Code", "Postman", "Android Studio", "DBeaver", "Eclipse/IntelliJ"] 
   },
 ];
 
