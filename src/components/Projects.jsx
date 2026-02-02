@@ -51,108 +51,113 @@ export const Projects = () => {
   );
 };
 
-// --- CAROUSEL OPTIMIZADO (Responsivo) ---
 const CarouselView = ({ projects, t }) => {
   const [width, setWidth] = useState(0);
   const carouselRef = useRef();
   const x = useMotionValue(0);
-  const progressTextRef = useRef(null);
+  const [currentProgress, setCurrentProgress] = useState(0);
 
   useEffect(() => {
     if (carouselRef.current) {
+      // Calculamos el ancho total deslizable
       setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
     }
   }, [projects]);
 
-  const progressWidth = useTransform(x, (latestX) => {
-    if (width === 0) return "0%";
-    const p = Math.abs(latestX / width) * 100;
-    return `${Math.min(Math.max(p, 0), 100)}%`;
-  });
-
+  // Sincronizar la barra de progreso de forma eficiente
   useMotionValueEvent(x, "change", (latest) => {
-    if (progressTextRef.current && width > 0) {
+    if (width > 0) {
       const p = Math.abs(latest / width) * 100;
-      const clamped = Math.round(Math.min(Math.max(p, 0), 100));
-      progressTextRef.current.innerText = `${clamped}%`;
+      setCurrentProgress(Math.min(Math.max(p, 0), 100));
     }
   });
 
   const slide = (direction) => {
     const currentX = x.get();
-    const moveAmount = window.innerWidth < 640 ? 300 : 500; // Menor desplazamiento en móvil
+    const moveAmount = window.innerWidth < 640 ? 320 : 500;
     let newX = direction === 'left' ? currentX + moveAmount : currentX - moveAmount;
 
+    // Límites para que no se pase del largo
     if (newX > 0) newX = 0;
     if (newX < -width) newX = -width;
 
-    animate(x, newX, { type: "spring", stiffness: 300, damping: 30 });
+    animate(x, newX, { 
+      type: "spring", 
+      stiffness: 200, // Menos rigidez para que sea más suave
+      damping: 25, 
+      mass: 0.5 
+    });
   };
 
   return (
     <div className="relative group/carousel">
-      <div className="absolute -top-6 sm:-top-8 right-0 font-mono text-[8px] sm:text-[9px] text-zinc-500 flex items-center gap-2 animate-pulse">
-        <span className="hidden sm:inline">&lt;&lt; DRAG_ENABLED &gt;&gt;</span>
-        <span className="sm:hidden">&lt;&lt; SWIPE &gt;&gt;</span>
+      {/* Indicador superior */}
+      <div className="absolute -top-6 sm:-top-8 right-0 font-mono text-[8px] sm:text-[9px] text-zinc-500 flex items-center gap-2 opacity-50">
+        <span>[ DRAG_OR_SWIPE_ACTIVE ]</span>
       </div>
 
-      <motion.div ref={carouselRef} className="cursor-grab active:cursor-grabbing overflow-hidden relative z-10">
-        <motion.div 
-          drag="x" 
-          dragConstraints={{ right: 0, left: -width }} 
+      <div className="overflow-hidden" ref={carouselRef}>
+        <motion.div
+          drag="x"
+          dragConstraints={{ right: 0, left: -width }}
+          dragElastic={0.1} // Un poco de rebote en los bordes para naturalidad
+          dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
           style={{ x }}
           whileTap={{ cursor: "grabbing" }}
-          className="flex gap-4 sm:gap-6 md:gap-8"
+          className="flex gap-4 sm:gap-6 md:gap-8 cursor-grab"
         >
           {projects.map((project, index) => (
-            <div key={project.id} className="min-w-[90vw] xs:min-w-[85vw] sm:min-w-[75vw] md:min-w-[450px]">
-               <ProjectScreen project={project} index={index} t={t} />
+            <div 
+              key={project.id} 
+              className="min-w-[85vw] xs:min-w-[80vw] sm:min-w-[70vw] md:min-w-[450px] shrink-0"
+            >
+              <ProjectScreen project={project} index={index} t={t} />
             </div>
           ))}
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* --- HUD CONTROLS - Responsive --- */}
+      {/* --- HUD CONTROLS --- */}
       <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sm:gap-0 border-t border-white/5 pt-4">
         
         {/* Barra de Progreso */}
         <div className="flex flex-col gap-1 w-full sm:w-1/3">
           <div className="flex justify-between text-[9px] font-mono text-zinc-500 uppercase">
-            <span>Scroll_X</span>
-            <span ref={progressTextRef}>0%</span>
+            <span>Scroll_Sync</span>
+            <span>{Math.round(currentProgress)}%</span>
           </div>
-          <div className="h-[2px] w-full bg-zinc-900 relative overflow-hidden">
-             <motion.div 
-               className="absolute top-0 left-0 h-full bg-cyan-500 shadow-[0_0_10px_cyan]"
-               style={{ width: progressWidth }} 
-             />
+          <div className="h-[2px] w-full bg-zinc-900 relative">
+            <motion.div 
+              className="absolute top-0 left-0 h-full bg-cyan-500 shadow-[0_0_10px_cyan]"
+              style={{ width: `${currentProgress}%` }} 
+            />
           </div>
         </div>
 
-        {/* Botones de navegación */}
+        {/* Botones de Navegación */}
         <div className="flex items-center gap-3 sm:gap-4 justify-center sm:justify-end">
           <button 
             onClick={() => slide('left')}
-            className="group relative flex-1 sm:flex-initial px-3 sm:px-4 py-2 border border-white/10 bg-zinc-900/50 hover:bg-cyan-900/20 hover:border-cyan-500/50 transition-all active:scale-95"
+            className="group relative flex-1 sm:flex-initial px-6 py-2 border border-white/10 bg-zinc-900/50 hover:border-cyan-500/50 transition-all active:scale-90"
           >
-            <div className="flex items-center justify-center sm:justify-start gap-2 font-mono text-[10px] sm:text-xs text-zinc-400 group-hover:text-cyan-400">
+            <div className="flex items-center justify-center gap-2 font-mono text-[10px] sm:text-xs text-zinc-400 group-hover:text-cyan-400">
               <FaChevronLeft />
               <span className="hidden md:inline">{t.ui.prevSection}</span>
             </div>
-            <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-zinc-500 group-hover:border-cyan-400 transition-colors" />
-            <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-zinc-500 group-hover:border-cyan-400 transition-colors" />
+            <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-zinc-500 group-hover:border-cyan-400" />
+            <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-zinc-500 group-hover:border-cyan-400" />
           </button>
 
           <button 
             onClick={() => slide('right')}
-            className="group relative flex-1 sm:flex-initial px-3 sm:px-4 py-2 border border-white/10 bg-zinc-900/50 hover:bg-cyan-900/20 hover:border-cyan-500/50 transition-all active:scale-95"
+            className="group relative flex-1 sm:flex-initial px-6 py-2 border border-white/10 bg-zinc-900/50 hover:border-cyan-500/50 transition-all active:scale-90"
           >
-            <div className="flex items-center justify-center sm:justify-start gap-2 font-mono text-[10px] sm:text-xs text-zinc-400 group-hover:text-cyan-400">
+            <div className="flex items-center justify-center gap-2 font-mono text-[10px] sm:text-xs text-zinc-400 group-hover:text-cyan-400">
               <span className="hidden md:inline">{t.ui.nextSection}</span>
               <FaChevronRight />
             </div>
-            <span className="absolute top-0 right-0 w-1 h-1 border-t border-r border-zinc-500 group-hover:border-cyan-400 transition-colors" />
-            <span className="absolute bottom-0 left-0 w-1 h-1 border-b border-l border-zinc-500 group-hover:border-cyan-400 transition-colors" />
+            <span className="absolute top-0 right-0 w-1 h-1 border-t border-r border-zinc-500 group-hover:border-cyan-400" />
+            <span className="absolute bottom-0 left-0 w-1 h-1 border-b border-l border-zinc-500 group-hover:border-cyan-400" />
           </button>
         </div>
       </div>

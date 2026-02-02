@@ -42,7 +42,7 @@ export const GlassDeviceSkills = () => {
   };
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center">
       {/* Grid pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03] sm:opacity-[0.05] pointer-events-none" 
@@ -51,7 +51,7 @@ export const GlassDeviceSkills = () => {
       
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Header */}
-        <div className="mb-12 sm:mb-20 md:mb-32 relative">
+        <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-32 relative">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 animate-fadeInLeft">
             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse-glow" />
             <span className="font-mono text-[8px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.5em] text-green-500/60 uppercase">
@@ -75,7 +75,7 @@ export const GlassDeviceSkills = () => {
         </div>
 
         {/* Mobile Carousel (< 640px) */}
-        <div className="sm:hidden relative">
+        <div className="sm:hidden relative pb-8">
           <div className="relative overflow-hidden">
             <div 
               className="flex transition-transform duration-500 ease-out"
@@ -103,7 +103,7 @@ export const GlassDeviceSkills = () => {
           </div>
 
           {/* Carousel Controls */}
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-4 mt-6">
             <button
               onClick={prevSlide}
               className="w-10 h-10 flex items-center justify-center border border-white/10 bg-zinc-900/50 rounded hover:bg-white/5 transition-colors"
@@ -135,7 +135,7 @@ export const GlassDeviceSkills = () => {
         </div>
 
         {/* Tablet Grid (640px - 1024px) */}
-        <div className="hidden sm:grid lg:hidden grid-cols-2 gap-6 md:gap-8 max-w-2xl mx-auto">
+        <div className="hidden sm:grid lg:hidden grid-cols-2 gap-6 md:gap-8 max-w-2xl mx-auto pb-12">
           {skillsData.map((skill, index) => (
             <div
               key={skill.category}

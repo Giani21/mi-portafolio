@@ -202,7 +202,7 @@ export const content = {
           title: "Scalability & Data",
           desc: "I build the internal architecture that supports your business. I ensure the system is secure, automated, and capable of handling large data volumes.",
           tech: ["Node.js", "PostgreSQL", "Prisma"],
-          image: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=2000&auto=format&fit=crop"
+          image: "https://imgs.search.brave.com/K15QBObQEyTm1jXe3RZ4Q-GGYPLwsVPwwFBNb4SrjwY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEyLzc2LzkzLzM4/LzM2MF9GXzEyNzY5/MzM4NDlfMVZxWDVZ/M0xUaDdkWlAzZUFI/dGM2QkpLemt0ZDAx/TkwuanBn"
         },
         {
           id: "03",
