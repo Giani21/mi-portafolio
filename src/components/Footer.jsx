@@ -7,6 +7,7 @@ export const Footer = () => {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
+  // Función para scroll suave a las secciones
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -17,74 +18,92 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-[#050505] pt-20 pb-10 overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#050505] pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 md:pb-10 overflow-hidden border-t border-white/5">
+      {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-900 to-transparent" />
-        <div className="absolute -top-[100px] left-1/4 w-[500px] h-[500px] bg-green-500/5 blur-[120px] rounded-full mix-blend-screen" />
+        <div className="absolute -top-[100px] left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-green-500/5 blur-[80px] sm:blur-[120px] rounded-full mix-blend-screen" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        {/* Main content grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 mb-10 sm:mb-12 md:mb-16">
           
-          <div className="md:col-span-5 space-y-6">
+          {/* Info de Perfil */}
+          <div className="sm:col-span-2 lg:col-span-5 space-y-4 sm:space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-zinc-900 border border-white/10 flex items-center justify-center rounded-sm">
-                <FaTerminal className="text-green-500" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-900 border border-white/10 flex items-center justify-center rounded-sm shrink-0">
+                <FaTerminal className="text-green-500 text-sm sm:text-base" />
               </div>
               <div>
-                <h3 className="text-white font-bold tracking-wider text-lg">GIANFRANCO_A</h3>
-                <p className="text-green-500/70 text-[10px] font-mono tracking-widest">FULL_STACK_DEV // OPERATOR</p>
+                <h3 className="text-white font-bold tracking-wider text-base sm:text-lg">GIANFRANCO_A</h3>
+                <p className="text-green-500/70 text-[9px] sm:text-[10px] font-mono tracking-widest">FULL_STACK_DEV // OPERATOR</p>
               </div>
             </div>
-            <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
+            
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
               {t.profile.description}
             </p>
             
+            {/* Status indicator */}
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/5 border border-green-500/20 rounded-full">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              <span className="text-[10px] font-mono text-green-500 font-bold tracking-wider">
+              <span className="text-[9px] sm:text-[10px] font-mono text-green-500 font-bold tracking-wider">
                 {t.ui.serverStatus || "SYSTEMS ONLINE"}
               </span>
             </div>
           </div>
 
-          <div className="md:col-span-3">
-            <h4 className="text-white font-bold mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-green-500 rounded-sm" />
+          {/* Navegación */}
+          <div className="lg:col-span-3">
+            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6 flex items-center gap-2">
+              <span className="w-1 h-3 sm:h-4 bg-green-500 rounded-sm" />
               {t.ui.footerNav || "NAVIGATION"}
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-3 sm:space-y-4">
               {['home', 'stack', 'projects'].map((item) => (
                 <li key={item}>
                   <button 
                     onClick={() => scrollToSection(item)}
-                    className="text-zinc-400 hover:text-green-400 hover:translate-x-2 transition-all duration-300 flex items-center gap-2 text-sm group"
+                    className="text-zinc-400 hover:text-green-400 hover:translate-x-2 transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm group"
                   >
-                    <FaCode className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <span className="uppercase tracking-wider font-mono text-xs">{item}</span>
+                    <FaCode className="text-[9px] sm:text-[10px] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="uppercase tracking-wider font-mono">{item}</span>
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="md:col-span-4">
-            <h4 className="text-white font-bold mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-purple-500 rounded-sm" />
+          {/* Conexión y Redes */}
+          <div className="sm:col-span-2 lg:col-span-4">
+            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6 flex items-center gap-2">
+              <span className="w-1 h-3 sm:h-4 bg-purple-500 rounded-sm" />
               {t.ui.footerConnect || "CONNECT"}
             </h4>
             
-            <div className="flex flex-wrap gap-4">
+            {/* Social buttons */}
+            <div className="flex flex-wrap gap-3 sm:gap-4">
               <SocialButton href={social.github} icon={FaGithub} label="GitHub" />
               <SocialButton href={social.linkedin} icon={FaLinkedin} label="LinkedIn" />
-              <SocialButton href={`mailto:${social.email}`} icon={FaEnvelope} label="Email" />
+              
+              {/* Email button - scrolls to contact form */}
+              <button 
+                onClick={() => scrollToSection('contact')}
+                className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 rounded-sm overflow-hidden"
+                aria-label="Contact Form"
+              >
+                <FaEnvelope className="text-zinc-400 group-hover:text-green-400 text-lg sm:text-xl relative z-10 transition-transform group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
             </div>
 
-            <div className="mt-8 p-4 bg-zinc-900/50 border border-white/5 rounded-sm">
-              <code className="text-[10px] text-zinc-500 font-mono block">
+            {/* Terminal code block */}
+            <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-zinc-900/50 border border-white/5 rounded-sm">
+              <code className="text-[9px] sm:text-[10px] text-zinc-500 font-mono block leading-relaxed">
                 $ git commit -m "Initial_Commit"<br/>
                 $ git push origin master<br/>
                 <span className="text-green-500">Success...</span>
@@ -93,10 +112,17 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-zinc-500 text-xs font-mono">
+        {/* Copyright */}
+        <div className="border-t border-white/5 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-center sm:text-left">
+          <p className="text-zinc-500 text-[10px] sm:text-xs font-mono">
             © {currentYear} Gianfranco Andreachi. {t.ui.footerRights || "All rights reserved"}.
           </p>
+          
+          {/* Mobile indicator - only on small screens */}
+          <div className="sm:hidden flex items-center gap-2 text-[9px] font-mono text-zinc-600">
+            <div className="w-1 h-1 rounded-full bg-green-500/50" />
+            <span>v1.0.0</span>
+          </div>
         </div>
       </div>
     </footer>
@@ -108,10 +134,10 @@ const SocialButton = ({ href, icon: Icon, label }) => (
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="group relative flex items-center justify-center w-12 h-12 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 rounded-sm overflow-hidden"
+    className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 rounded-sm overflow-hidden"
     aria-label={label}
   >
-    <Icon className="text-zinc-400 group-hover:text-green-400 text-xl relative z-10 transition-transform group-hover:scale-110" />
+    <Icon className="text-zinc-400 group-hover:text-green-400 text-lg sm:text-xl relative z-10 transition-transform group-hover:scale-110" />
     <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
   </a>
 );

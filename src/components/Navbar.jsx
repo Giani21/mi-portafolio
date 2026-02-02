@@ -1,141 +1,354 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { social } from '../data/config';
-import { FaCode, FaFolder, FaHome, FaEnvelope } from 'react-icons/fa';
-import logo from '../../src/assets/Logo.png';
+import {
+  FaCode,
+  FaFolder,
+  FaHome,
+  FaEnvelope,
+  FaBars,
+  FaTimes,
+  FaTerminal
+} from 'react-icons/fa';
+import logo from '../assets/Logo.png';
 
 export const Navbar = () => {
   const { language, toggleLanguage, t } = useLanguage();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      
-      const contactSection = document.getElementById('contact');
-      const projectSection = document.getElementById('projects');
-      const stackSection = document.getElementById('stack');
-      
-      // El orden importa: de abajo hacia arriba de la página
-      if (contactSection && window.scrollY >= contactSection.offsetTop - 400) {
+      // Detect scroll for navbar background
+      setScrolled(window.scrollY > 20);
+
+      const contact = document.getElementById('contact');
+      const projects = document.getElementById('projects');
+      const stack = document.getElementById('stack');
+
+      if (contact && window.scrollY >= contact.offsetTop - 300) {
         setActiveTab('contact');
-      } else if (projectSection && window.scrollY >= projectSection.offsetTop - 300) {
+      } else if (projects && window.scrollY >= projects.offsetTop - 300) {
         setActiveTab('projects');
-      } else if (stackSection && window.scrollY >= stackSection.offsetTop - 300) {
+      } else if (stack && window.scrollY >= stack.offsetTop - 300) {
         setActiveTab('stack');
       } else {
         setActiveTab('home');
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveTab(id);
-    }
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    setActiveTab(id);
+    setMenuOpen(false);
   };
 
   const navItems = [
     { id: 'home', label: language === 'es' ? 'INICIO' : 'HOME', icon: FaHome },
-    { id: 'stack', label: language === 'es' ? 'TECNOLOGÍAS' : 'STACK', icon: FaCode },
-    { id: 'projects', label: language === 'es' ? 'PROYECTOS' : 'PROJECTS', icon: FaFolder },
-    { id: 'contact', label: language === 'es' ? 'CONTACTO' : 'CONTACT', icon: FaEnvelope },
+    { id: 'stack', label: language === 'es' ? 'STACK' : 'STACK', icon: FaTerminal },
+    { id: 'projects', label: language === 'es' ? 'PROYECTOS' : 'PROJECTS', icon: FaFolder }
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-colors duration-500 border-b ${isScrolled ? 'bg-[#030712]/80 backdrop-blur-md border-green-900/30 h-16' : 'bg-transparent border-transparent h-24'}`}>
+    <>
+      {/* Main Navbar */}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+          scrolled
+            ? 'h-14 bg-black/95 backdrop-blur-xl border-b border-green-500/20 shadow-lg shadow-green-500/5'
+            : 'h-16 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm'
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="flex items-center justify-between h-full gap-4">
 
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-500/20 to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center relative">
-        
-        <div className="flex items-center gap-4 min-w-[150px]">
-          <button onClick={() => scrollToSection('home')} className="group relative w-10 h-10 flex items-center justify-center bg-zinc-900/50 border border-white/10 rounded-sm overflow-hidden shrink-0">
-             <div className="absolute inset-0 bg-green-500/10 scale-y-0 group-hover:scale-y-100 transition-transform origin-bottom duration-300" />
-              <img src={logo} alt="Logo" className="w-6 h-6 mr-1 relative scale-100 group-hover:scale-110 transition-transform duration-300" />
-             <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-          </button>
-          
-          <div className="hidden md:flex flex-col">
-            <span className="font-mono text-[9px] text-green-500 tracking-[0.3em] uppercase">System_Op</span>
-            <span className="font-bold text-xs text-white tracking-widest transition-colors">
-              {t.profile.name.split(' ')[0]}
-            </span>
-          </div>
-        </div>
-
-        <div className="absolute left-1/2 -translate-x-1/2 h-full flex items-center">
-          <div className="flex items-center p-1 bg-zinc-900/30 border border-white/5 rounded-full backdrop-blur-sm gap-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="relative px-4 py-2 rounded-full font-mono text-[10px] font-bold tracking-widest transition-all z-10 group min-w-[100px] md:min-w-[120px] flex justify-center items-center"
-              >
-                {activeTab === item.id && (
+            {/* Logo Section */}
+            <motion.button
+              onClick={() => scrollToSection('home')}
+              className="flex items-center gap-2 sm:gap-3 group shrink-0"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10">
+                {/* Glowing border effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded blur group-hover:blur-md transition-all" />
+                <div className="relative w-full h-full flex items-center justify-center bg-zinc-950 border border-green-500/30 rounded overflow-hidden group-hover:border-green-400/50 transition-colors">
+                  <img src={logo} alt="Logo" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
+                  {/* Scan line effect */}
                   <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-zinc-800 border border-white/10 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className="absolute inset-0 bg-gradient-to-b from-transparent via-green-400/10 to-transparent"
+                    animate={{ y: ['-100%', '100%'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                   />
-                )}
-
-                <span className={`relative z-10 flex items-center gap-2 ${activeTab === item.id ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
-                  <item.icon className={`text-[10px] shrink-0 ${activeTab === item.id ? 'text-green-400' : 'opacity-0 group-hover:opacity-50 transition-opacity'}`} />
-                  <span className="whitespace-nowrap">{item.label}</span>
+                </div>
+              </div>
+              <div className="hidden sm:flex flex-col items-start">
+                <span className="font-mono text-xs sm:text-sm tracking-wider text-green-400 leading-none">
+                  {t.profile.name.split(' ')[0]}
                 </span>
+                <span className="font-mono text-[9px] text-zinc-600 tracking-widest leading-none mt-0.5">
+                  DEVELOPER
+                </span>
+              </div>
+            </motion.button>
 
-                {activeTab === item.id && (
-                  <div className="absolute bottom-0 left-1/4 w-1/2 h-[1px] bg-green-500 shadow-[0_0_5px_#22c55e]" />
-                )}
-              </button>
-            ))}
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1 bg-zinc-950/80 border border-green-500/20 rounded-lg p-1 backdrop-blur-sm">
+              {navItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="relative group"
+                >
+                  {/* Active indicator */}
+                  {activeTab === item.id && (
+                    <motion.div
+                      layoutId="navActiveTab"
+                      className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-md border border-green-500/30"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  
+                  <div className="relative z-10 flex items-center gap-2 px-5 py-2.5 min-w-[140px]">
+                    <item.icon
+                      className={`text-xs transition-colors ${
+                        activeTab === item.id ? 'text-green-400' : 'text-zinc-600 group-hover:text-green-500/70'
+                      }`}
+                    />
+                    <span
+                      className={`font-mono text-[11px] tracking-widest transition-colors ${
+                        activeTab === item.id ? 'text-green-400' : 'text-zinc-500 group-hover:text-zinc-300'
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                    {/* Corner accent */}
+                    <div className={`absolute top-0 right-0 w-1.5 h-1.5 border-t border-r transition-colors ${
+                      activeTab === item.id ? 'border-green-400/50' : 'border-transparent group-hover:border-green-500/30'
+                    }`} />
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Right Section */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+
+              {/* Contact Button (Desktop/Tablet) */}
+              <motion.button
+                onClick={() => scrollToSection('contact')}
+                className="hidden md:flex items-center justify-center gap-2 px-4 lg:px-6 h-9 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded font-mono text-[10px] lg:text-[11px] tracking-widest text-green-400 hover:bg-green-500/20 hover:border-green-400/50 hover:shadow-lg hover:shadow-green-500/20 transition-all relative overflow-hidden group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FaEnvelope className="text-xs" />
+                <span className="relative z-10">{t.profile.buttonContact}</span>
+                {/* Shine effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/10 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+              </motion.button>
+
+              {/* Language Switcher */}
+              <div className="hidden sm:flex items-center bg-zinc-950/80 border border-green-500/20 rounded overflow-hidden">
+                <button
+                  onClick={() => language === 'en' && toggleLanguage()}
+                  className={`px-3 py-2 font-mono text-[10px] tracking-wider transition-all ${
+                    language === 'es'
+                      ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-green-400 border-r border-green-500/30'
+                      : 'text-zinc-600 hover:text-zinc-400'
+                  }`}
+                >
+                  ES
+                </button>
+                <button
+                  onClick={() => language === 'es' && toggleLanguage()}
+                  className={`px-3 py-2 font-mono text-[10px] tracking-wider transition-all ${
+                    language === 'en'
+                      ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-green-400 border-l border-green-500/30'
+                      : 'text-zinc-600 hover:text-zinc-400'
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
+
+              {/* Mobile Contact Icon */}
+              <motion.button
+                onClick={() => scrollToSection('contact')}
+                className="md:hidden w-9 h-9 flex items-center justify-center border border-green-500/30 bg-zinc-950/80 rounded hover:bg-green-500/10 hover:border-green-400/50 transition-all"
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaEnvelope className="text-green-400 text-sm" />
+              </motion.button>
+
+              {/* Mobile Menu Button */}
+              <motion.button
+                onClick={() => setMenuOpen(true)}
+                className="lg:hidden w-9 h-9 flex items-center justify-center border border-green-500/30 bg-zinc-950/80 rounded hover:bg-green-500/10 hover:border-green-400/50 transition-all relative overflow-hidden group"
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaBars className="text-green-400 text-sm relative z-10" />
+                {/* Pulse effect */}
+                <motion.div
+                  className="absolute inset-0 bg-green-500/20 rounded"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 md:gap-6 min-w-[150px] justify-end">
-          
-          <button 
-            onClick={toggleLanguage}
-            className="group flex items-center gap-2 font-mono text-[10px] text-zinc-500 hover:text-white transition-colors"
-          >
-            <span className="uppercase tracking-widest hidden lg:inline text-green-500 shrink-0">LANG:</span>
-            <div className="flex items-center bg-zinc-900 border border-white/10 px-2 py-1 rounded-sm relative overflow-hidden w-14 justify-center">
-               <motion.div 
-                 className="absolute top-0 bottom-0 bg-white/10 w-1/2"
-                 animate={{ left: language === 'es' ? '0%' : '50%' }}
-                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-               />
-               <span className={`relative z-10 px-1 transition-colors ${language === 'es' ? 'text-green-400 font-bold' : 'text-zinc-600'}`}>ES</span>
-               <span className="text-zinc-700">/</span>
-               <span className={`relative z-10 px-1 transition-colors ${language === 'en' ? 'text-green-400 font-bold' : 'text-zinc-600'}`}>EN</span>
-            </div>
-          </button>
+        {/* Bottom scan line */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
+      </motion.nav>
 
-          <div className="w-[1px] h-4 bg-zinc-800 shrink-0" />
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMenuOpen(false)}
+            />
 
-          <a
-            href={`mailto:${social.email}`}
-            className="relative flex items-center justify-center w-9 h-9 md:w-[160px] md:px-5 md:py-2 bg-white/5 border border-white/10 rounded-sm group/contact overflow-hidden transition-colors duration-300 hover:border-green-500/50 hover:bg-green-500/10 shrink-0"
-          >
-             <div className="absolute inset-0 bg-green-400/20 translate-y-full group-hover/contact:translate-y-0 transition-transform duration-300" />
-             
-             <FaEnvelope className="text-zinc-400 group-hover/contact:text-green-400 md:hidden relative z-10" />
-             
-             <span className="hidden md:block font-mono text-[10px] font-bold text-zinc-300 group-hover/contact:text-white uppercase tracking-widest relative z-10 whitespace-nowrap">
-               {t.profile.buttonContact}
-             </span>
-          </a>
+            {/* Menu Panel */}
+            <motion.div
+              className="fixed inset-y-0 right-0 w-full sm:w-80 z-[100] bg-gradient-to-b from-zinc-950 to-black border-l border-green-500/20"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            >
+              {/* Menu Header */}
+              <div className="relative h-16 border-b border-green-500/20 flex items-center justify-between px-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 flex items-center justify-center bg-zinc-950 border border-green-500/30 rounded">
+                    <img src={logo} alt="Logo" className="w-4 h-4" />
+                  </div>
+                  <span className="font-mono text-xs tracking-widest text-green-400">MENU</span>
+                </div>
+                <motion.button
+                  onClick={() => setMenuOpen(false)}
+                  className="w-8 h-8 flex items-center justify-center border border-green-500/30 bg-zinc-950 rounded hover:bg-green-500/10 transition-colors"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaTimes className="text-green-400 text-sm" />
+                </motion.button>
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-green-500/20" />
+                <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-green-500/20" />
+              </div>
 
-        </div>
-      </div>
-    </nav>
+              {/* Menu Content */}
+              <div className="flex flex-col p-6 gap-3 overflow-y-auto max-h-[calc(100vh-4rem)]">
+                {/* Navigation Items */}
+                <div className="space-y-2">
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`w-full flex items-center gap-3 px-4 py-3.5 font-mono text-xs tracking-wider rounded border transition-all group ${
+                        activeTab === item.id
+                          ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/10 border-green-500/30 text-green-400'
+                          : 'border-green-500/10 text-zinc-400 hover:border-green-500/30 hover:bg-green-500/5'
+                      }`}
+                      initial={{ x: 50, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className={`w-8 h-8 flex items-center justify-center border rounded ${
+                        activeTab === item.id ? 'border-green-500/30 bg-green-500/10' : 'border-green-500/10'
+                      }`}>
+                        <item.icon className="text-sm" />
+                      </div>
+                      <span className="flex-1 text-left">{item.label}</span>
+                      <div className={`w-1.5 h-1.5 rounded-full transition-all ${
+                        activeTab === item.id ? 'bg-green-400' : 'bg-transparent group-hover:bg-green-500/30'
+                      }`} />
+                    </motion.button>
+                  ))}
+                </div>
+
+                {/* Divider */}
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-green-500/20 to-transparent my-2" />
+
+                {/* Contact Button */}
+                <motion.button
+                  onClick={() => scrollToSection('contact')}
+                  className="w-full flex items-center gap-3 px-4 py-3.5 font-mono text-xs tracking-wider rounded border border-green-500/30 bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-green-400 hover:bg-green-500/20 transition-all"
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="w-8 h-8 flex items-center justify-center border border-green-500/30 bg-green-500/10 rounded">
+                    <FaEnvelope className="text-sm" />
+                  </div>
+                  <span className="flex-1 text-left">{t.profile.buttonContact}</span>
+                </motion.button>
+
+                {/* Language Switcher */}
+                <motion.div
+                  className="mt-4"
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.25 }}
+                >
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        if (language === 'en') toggleLanguage();
+                      }}
+                      className={`py-3 font-mono text-xs tracking-wider rounded border transition-all ${
+                        language === 'es'
+                          ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/10 border-green-500/30 text-green-400'
+                          : 'border-green-500/10 text-zinc-600 hover:border-green-500/20'
+                      }`}
+                    >
+                      ES
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (language === 'es') toggleLanguage();
+                      }}
+                      className={`py-3 font-mono text-xs tracking-wider rounded border transition-all ${
+                        language === 'en'
+                          ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/10 border-green-500/30 text-green-400'
+                          : 'border-green-500/10 text-zinc-600 hover:border-green-500/20'
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Decorative corner lines */}
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-green-500/20" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-green-500/20" />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

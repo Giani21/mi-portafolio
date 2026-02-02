@@ -101,12 +101,14 @@ export const Hero = () => {
     <section 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="min-h-screen bg-[#030712] text-white flex items-center justify-center relative overflow-hidden px-8 lg:px-24"
+      className="min-h-screen bg-[#030712] text-white flex items-center justify-center relative overflow-hidden px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 pt-20 sm:pt-24 md:pt-0"
     >
-      <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-cyan-900/10 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] bg-blue-900/10 blur-[150px] rounded-full pointer-events-none" />
+      {/* Gradient blobs - adjusted for mobile */}
+      <div className="absolute top-[-5%] sm:top-[-10%] left-[-10%] sm:left-[-5%] w-[80%] sm:w-[60%] h-[40%] sm:h-[60%] bg-cyan-900/10 blur-[100px] sm:blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-5%] sm:bottom-[-10%] right-[-10%] sm:right-[-5%] w-[70%] sm:w-[50%] h-[40%] sm:h-[50%] bg-blue-900/10 blur-[100px] sm:blur-[150px] rounded-full pointer-events-none" />
 
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* Tech icons floating - hidden on small mobile */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden hidden sm:block">
         {techWaves.map((item, i) => (
           <motion.div
             key={i}
@@ -121,26 +123,30 @@ export const Hero = () => {
         ))}
       </div>
 
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-        style={{ backgroundImage: `radial-gradient(circle, #fff 1px, transparent 1px)`, backgroundSize: '100px 100px' }} 
+      {/* Grid pattern - adjusted opacity for mobile */}
+      <div className="absolute inset-0 opacity-[0.02] sm:opacity-[0.03] pointer-events-none" 
+        style={{ backgroundImage: `radial-gradient(circle, #fff 1px, transparent 1px)`, backgroundSize: '80px 80px' }} 
       />
 
-      <div className="w-full max-w-[1600px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <div className="w-full max-w-[1600px] grid grid-cols-1 2xl:grid-cols-12 gap-8 md:gap-12 items-center relative z-10">
         
-        <div className="lg:col-span-7">
+        {/* Main content */}
+        <div className="2xl:col-span-7">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="mb-6 flex items-center gap-3">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]" />
-              <span className="font-mono text-[10px] tracking-[0.5em] text-green-500/70 uppercase">
-                {t.profile.role} // STATUS: ACTIVE
+            {/* Status badge - responsive */}
+            <div className="mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e] sm:shadow-[0_0_10px_#22c55e]" />
+              <span className="font-mono text-[8px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.5em] text-green-500/70 uppercase">
+                {t.profile.role} <span className="hidden sm:inline">// STATUS: ACTIVE</span>
               </span>
             </div>
 
-            <h1 className="text-7xl md:text-9xl xl:text-[11rem] font-black leading-[0.8] tracking-tighter mb-10 text-white">
+            {/* Main title - fully responsive */}
+            <h1 className="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[11rem] font-black leading-[0.85] sm:leading-[0.8] tracking-tighter mb-6 sm:mb-8 md:mb-10 text-white">
               {t.profile.name.split(' ')[0]}
               <br />
               <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
@@ -148,33 +154,44 @@ export const Hero = () => {
               </span>
             </h1>
 
-            <div className="max-w-xl border-l border-white/10 pl-8 py-2">
-              <p className="text-zinc-500 font-mono text-base md:text-lg leading-relaxed italic">
+            {/* Description - responsive padding and text */}
+            <div className="max-w-xl border-l border-white/10 pl-4 sm:pl-6 md:pl-8 py-2">
+              <p className="text-zinc-500 font-mono text-sm sm:text-base md:text-lg leading-relaxed italic">
                 "{t.profile.description}"
               </p>
             </div>
 
-            <div className="mt-14 flex flex-wrap gap-6 font-mono">
+            {/* Action buttons - responsive stacking */}
+            <div className="mt-8 sm:mt-10 md:mt-14 flex flex-col xs:flex-row gap-3 sm:gap-4 md:gap-6 font-mono">
               <motion.a
-                href={`mailto:${social.email}`}
+                href="#contact"
                 whileHover={{ backgroundColor: "#fff", color: "#000" }}
-                className="px-10 py-4 border border-zinc-800 text-zinc-400 font-bold text-xs tracking-widest uppercase transition-all"
+                className="px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 border border-zinc-800 text-zinc-400 font-bold text-[10px] sm:text-xs tracking-widest uppercase transition-all text-center"
               >
                 / {t.profile.buttonContact}
               </motion.a>
               <button 
                 onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                className="px-10 py-4 bg-zinc-900/30 text-zinc-600 text-xs hover:text-white transition-all border border-transparent hover:border-zinc-800"
+                className="px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-zinc-900/30 text-zinc-600 text-[10px] sm:text-xs hover:text-white transition-all border border-transparent hover:border-zinc-800 text-center"
               >
                 [ {t.profile.buttonStack} ]
               </button>
             </div>
+
+            {/* Mobile-only status indicator */}
+            <div className="mt-8 sm:mt-10 2xl:hidden flex items-center gap-4 text-zinc-700">
+              <div className="flex items-center gap-2 text-[10px] font-mono">
+                <div className="w-1 h-1 rounded-full bg-green-500/40" />
+                <span>AVAILABLE FOR WORK</span>
+              </div>
+            </div>
           </motion.div>
         </div>
 
-        <div className="lg:col-span-5 hidden lg:flex flex-col justify-center">
-          <div className="border border-zinc-900 bg-black/40 backdrop-blur-xl p-10 rounded-sm relative overflow-hidden">
-            <div className="flex justify-between items-center mb-10 border-b border-zinc-900 pb-4">
+        {/* Telemetry panel - only visible on 2xl screens (1536px+) */}
+        <div className="2xl:col-span-5 hidden 2xl:flex flex-col justify-center">
+          <div className="border border-zinc-900 bg-black/40 backdrop-blur-xl p-8 xl:p-10 rounded-sm relative overflow-hidden">
+            <div className="flex justify-between items-center mb-8 xl:mb-10 border-b border-zinc-900 pb-4">
               <span className="font-mono text-[9px] text-green-500 tracking-widest uppercase">Telemetry_System</span>
               <div className="w-1.5 h-1.5 rounded-full bg-green-500/40" />
             </div>

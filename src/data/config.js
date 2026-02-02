@@ -3,15 +3,15 @@ export const content = {
     profile: {
       name: "Gianfranco Andreachi",
       role: "Desarrollador Full-Stack",
-      description: "Diseño aplicaciones escalables y optimizo la experiencia de usuario, transformando requerimientos de negocio en soluciones digitales eficientes.",
-      buttonContact: "Iniciar_Contacto",
-      buttonStack: "Ver Tecnologías"
+      description: "Ayudo a negocios a tener una presencia profesional en internet, creando aplicaciones fáciles de usar que convierten visitantes en clientes.",
+      buttonContact: "Contactarme",
+      buttonStack: "Mis Herramientas"
     },
     ui: {
       projectsTitle: "Proyectos",
       projectsSubtitle: "Recientes",
-      stackTitle: "Stack",
-      stackSubtitle: "Tecnológico",
+      stackTitle: "Mis",
+      stackSubtitle: "Herramientas",
       totalEntries: "ENTRADAS_TOTALES",
       accessRepo: "Repositorio",
       demoLive: "Ver Demo",
@@ -29,8 +29,8 @@ export const content = {
         id: 1,
         title: "DualEat",
         subtitle: "Ingeniería FoodTech",
-        description: "Plataforma gastronómica multiplataforma que conecta restaurantes y usuarios en casa.",
-        tags: ["React", "Node.js", "Redis", "WebSockets"],
+        description: "Plataforma gastronómica integral que conecta restaurantes y usuarios, optimizando la gestión de pedidos en tiempo real.",
+        tags: ["React", "Node.js", "Redis", "WebSockets", "IA", "Rest APIs", "Mobile/WEB"],
         link: "https://github.com/Giani2110/DualEat-Web",
         image: "./projects/DualEat.png", 
         status: "Producción",
@@ -39,7 +39,7 @@ export const content = {
         id: 2,
         title: "HyperG",
         subtitle: "Desarrollo Web",
-        description: "Plataforma virtual para gamers, ofrece catálogo de juegos y servicios en línea.",
+        description: "Plataforma virtual para gamers con catálogo interactivo y servicios en línea de alto rendimiento.",
         tags: ["React", "Tailwind", "MySQL", "Prisma"],
         link: "https://github.com/Giani2110/HyperG",
         image: "./projects/HyperG.png",
@@ -49,7 +49,7 @@ export const content = {
         id: 3,
         title: "MarketingReportes",
         subtitle: "Marketing & Analytics",
-        description: "Sistema para empresas de marketing, genera reportes automáticos de productos.",
+        description: "Sistema especializado para agencias que automatiza la generación de reportes y análisis de datos de productos.",
         tags: ["TypeScript", "Prisma", "Rest APIs"],
         link: "https://github.com/Giani2110/MarketingReportes",
         image: "./projects/MarketingReportes.png",
@@ -58,8 +58,8 @@ export const content = {
       {
         id: 4,
         title: "Yenny",
-        subtitle: "Gestion de Libreria",
-        description: "Sistema de gestión de libreria para prestar libros y catalogo.",
+        subtitle: "Gestión de Librería",
+        description: "Sistema administrativo para el control de inventarios, préstamos de libros y gestión de catálogos.",
         tags: ["React", "Tailwind", "MySQL", "Python", "Flask"],
         link: "https://github.com/Galoniax/24.2_AMS-TP",
         image: "./projects/Yenny.png",
@@ -69,7 +69,7 @@ export const content = {
         id: 5,
         title: "Vital Serenity",
         subtitle: "Desarrollo Web",
-        description: "Plataforma virtual para consulta de servicios de salud.",
+        description: "Plataforma profesional diseñada para la gestión de servicios de salud y consultas virtuales.",
         tags: ["Laravel", "Tailwind", "MySQL", "PHP"],
         link: "https://github.com/Galoniax/24.2_AMS-TP",
         image: "./projects/VitalSerenity.png",
@@ -78,30 +78,30 @@ export const content = {
     ],
     focus: {
       title: "Enfoque",
-      subtitle: "Técnico",
+      subtitle: "Profesional",
       cards: [
         {
           id: "01",
           area: "Frontend Architecture",
           title: "Experiencia de Usuario",
-          desc: "Desarrollo de interfaces reactivas y 'Pixel Perfect'. Priorizo la accesibilidad, animaciones fluidas (60fps) y diseño adaptable a cualquier dispositivo.",
+          desc: "Desarrollo interfaces visuales atractivas y fáciles de usar. Priorizo la rapidez, que se vea perfecto en móviles y una navegación intuitiva para tus clientes.",
           tech: ["React", "Tailwind", "Framer Motion"],
           image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
         },
         {
           id: "02",
           area: "Backend Systems",
-          title: "Escalabilidad & Datos",
-          desc: "Diseño de APIs RESTful robustas y seguras. Implementación de bases de datos SQL optimizadas y gestión de estado en el servidor.",
+          title: "Escalabilidad y Datos",
+          desc: "Construyo la arquitectura interna que sostiene tu negocio. Me aseguro de que el sistema sea seguro, automático y capaz de manejar grandes volúmenes de información.",
           tech: ["Node.js", "PostgreSQL", "Prisma"],
           image: "https://imgs.search.brave.com/K15QBObQEyTm1jXe3RZ4Q-GGYPLwsVPwwFBNb4SrjwY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEyLzc2LzkzLzM4/LzM2MF9GXzEyNzY5/MzM4NDlfMVZxWDVZ/M0xUaDdkWlAzZUFI/dGM2QkpLemt0ZDAx/TkwuanBn"
         },
         {
           id: "03",
-          area: "Performance",
-          title: "Optimización Core",
-          desc: "Mejora de tiempos de carga y SEO técnico. Estrategias de caché con Redis y optimización de assets para máxima velocidad.",
-          tech: ["Redis", "Lighthouse", "SEO"],
+          area: "Software Quality",
+          title: "Garantía de Calidad",
+          desc: "Me aseguro de que tu página esté bien construida desde adentro. Entrego un trabajo limpio y profesional para que el sistema sea confiable, rápido y no falle con el tiempo.",
+          tech: ["Git", "Docker", "Mantenimiento"],
           image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
         }
       ]
@@ -110,16 +110,16 @@ export const content = {
   en: {
     profile: {
       name: "Gianfranco Andreachi",
-      role: "Full-Stack Engineer",
-      description: "I design scalable applications and optimize user experience, transforming business requirements into efficient digital solutions.",
-      buttonContact: "Start_Contact",
-      buttonStack: "View_Stack"
+      role: "Full-Stack Developer",
+      description: "I help businesses build a professional online presence with easy-to-use applications that turn visitors into customers.",
+      buttonContact: "Contact Me",
+      buttonStack: "My Toolbox"
     },
     ui: {
       projectsTitle: "Recent",
       projectsSubtitle: "Projects",
-      stackTitle: "Tech",
-      stackSubtitle: "Stack",
+      stackTitle: "My",
+      stackSubtitle: "Toolbox",
       totalEntries: "TOTAL_ENTRIES",
       accessRepo: "Repository",
       demoLive: "Live Demo",
@@ -137,8 +137,8 @@ export const content = {
         id: 1,
         title: "DualEat",
         subtitle: "FoodTech Engineering",
-        description: "Cross-platform dining solution connecting restaurants with home users.",
-        tags: ["React", "Node.js", "Redis", "WebSockets"],
+        description: "Comprehensive dining platform connecting restaurants and users, optimizing real-time order management.",
+        tags: ["React", "Node.js", "Redis", "WebSockets", "IA", "Rest APIs", "Mobile/WEB"],
         link: "https://github.com/Giani2110/DualEat-Web",
         image: "./projects/DualEat.png",
         status: "Production",
@@ -147,7 +147,7 @@ export const content = {
         id: 2,
         title: "HyperG",
         subtitle: "Web Development",
-        description: "Virtual gamer platform offering a game catalog and online services.",
+        description: "Virtual gamer platform featuring an interactive catalog and high-performance online services.",
         tags: ["React", "Tailwind", "MySQL", "Prisma"],
         link: "https://github.com/Giani2110/HyperG",
         image: "./projects/HyperG.png",
@@ -157,7 +157,7 @@ export const content = {
         id: 3,
         title: "MarketingReports",
         subtitle: "Marketing & Analytics",
-        description: "Analytics system for marketing firms, generating automated product reports.",
+        description: "Specialized system for agencies that automates report generation and product data analysis.",
         tags: ["TypeScript", "Prisma", "Rest APIs"],
         link: "https://github.com/Giani2110/MarketingReportes",
         image: "./projects/MarketingReportes.png",
@@ -167,7 +167,7 @@ export const content = {
         id: 4,
         title: "Yenny",
         subtitle: "Library Management",
-        description: "Library management system for book lending and catalog.",
+        description: "Administrative system for inventory control, book loans, and catalog management.",
         tags: ["React", "Tailwind", "MySQL", "Python", "Flask"],
         link: "https://github.com/Galoniax/24.2_AMS-TP",
         image: "./projects/Yenny.png",
@@ -177,7 +177,7 @@ export const content = {
         id: 5,
         title: "Vital Serenity",
         subtitle: "Web Development",
-        description: "Virtual health services platform for consultation.",
+        description: "Professional digital platform designed for healthcare service management and virtual consultations.",
         tags: ["Laravel", "Tailwind", "MySQL", "PHP"],
         link: "https://github.com/Galoniax/24.2_AMS-TP",
         image: "./projects/VitalSerenity.png",
@@ -185,14 +185,14 @@ export const content = {
       }
     ],
     focus: {
-      title: "Focus",
-      subtitle: "Engineering",
+      title: "Our",
+      subtitle: "Focus",
       cards: [
         {
           id: "01",
           area: "Frontend Architecture",
           title: "User Experience",
-          desc: "Development of reactive and 'Pixel Perfect' interfaces. I prioritize accessibility, fluid animations (60fps), and responsive design.",
+          desc: "I develop visually appealing and easy-to-use interfaces. I prioritize speed, mobile responsiveness, and intuitive navigation for your customers.",
           tech: ["React", "Tailwind", "Framer Motion"],
           image: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
         },
@@ -200,52 +200,53 @@ export const content = {
           id: "02",
           area: "Backend Systems",
           title: "Scalability & Data",
-          desc: "Design of robust and secure RESTful APIs. Implementation of optimized SQL databases and server-side state management.",
+          desc: "I build the internal architecture that supports your business. I ensure the system is secure, automated, and capable of handling large data volumes.",
           tech: ["Node.js", "PostgreSQL", "Prisma"],
           image: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=2000&auto=format&fit=crop"
         },
         {
           id: "03",
-          area: "Performance",
-          title: "Core Optimization",
-          desc: "Improvement of load times and technical SEO. Caching strategies with Redis and asset optimization for maximum speed.",
-          tech: ["Redis", "Lighthouse", "SEO"],
+          area: "Quality Assurance",
+          title: "Reliable Solutions",
+          desc: "I make sure your website is built right from the ground up. I deliver clean and professional work to ensure the system is fast, reliable, and won't fail over time.",
+          tech: ["Git", "Docker", "Maintenance"],
           image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop"
         }
       ]
     }
   }
 };
+
 export const skills = [
   { 
     category: "Frontend",
     iconName: "FaReact", 
     color: "cyan", 
-    items: ["React", "Tailwind CSS", "TypeScript", "HTML5", "CSS3", "JavaScript"] 
+    items: ["React", "Tailwind CSS", "Bootstrap", "HTML5", "CSS3", "JavaScript"] 
   },
   { 
     category: "Backend",
     iconName: "FaServer",
     color: "yellow",
-    items: ["Node.js", "Express.js", "MySQL", "Redis", "REST APIs"] 
+    items: ["Express.js", "MySQL/PostgreSQL", "Java", "Python", "PHP"] 
   },
   { 
     category: "UX/UI",
     iconName: "FaPalette",
     color: "red",
-    items: ["Figma", "Adobe Photoshop", "Adobe Illustrator"] 
+    items: ["Figma", "Adobe Photoshop", "Adobe Illustrator", "Adobe XD", "Adobe After Effects", "Framer Motion"] 
   },
   { 
     category: "DevOps",
     iconName: "FaRocket",
     color: "blue",
-    items: ["Git", "GitHub", "GitLab", "Docker"] 
+    items: ["Git", "GitHub", "GitLab", "Docker", "Trello", "SCRUM"] 
   },
   { 
     category: "Tooling",
     iconName: "FaCogs",
     color: "violet",
-    items: ["VS Code", "Postman", "npm", "Yarn"] 
+    items: ["Visual Studio Code", "Postman", "Android Studio", "DBeaver/MySQL Workbench", "Eclipse/IntelliJ IDEA"] 
   },
 ];
 
