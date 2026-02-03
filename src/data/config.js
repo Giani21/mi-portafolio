@@ -2,17 +2,17 @@ export const content = {
   es: {
     profile: {
       name: "Gianfranco Andreachi",
-      role: "Desarrollador Full-Stack",
-      description: "Ayudo a negocios a tener una presencia profesional en internet, creando aplicaciones fáciles de usar que convierten visitantes en clientes.",
+      role: "Full-Stack - Analista en Sistemas",
+      description: "Desarrollo paginas y aplicaciones web para comercios y empresas.",
       buttonContact: "Contactarme",
       buttonStack: "Mis Herramientas"
     },
     ui: {
-      projectsTitle: "Proyectos",
-      projectsSubtitle: "Recientes",
-      stackTitle: "Mis",
+      projectsTitle: "Proyectos Recientes",
+      projectsSubtitle: "",
+      stackTitle: "Tecnologías",
       stackSubtitle: "Herramientas",
-      totalEntries: "ENTRADAS_TOTALES",
+      totalEntries: "PROYECTOS",
       accessRepo: "Repositorio",
       demoLive: "Ver Demo",
       status: "Estado",
@@ -116,9 +116,9 @@ export const content = {
       buttonStack: "My Toolbox"
     },
     ui: {
-      projectsTitle: "Recent",
-      projectsSubtitle: "Projects",
-      stackTitle: "My",
+      projectsTitle: "Recent Projects",
+      projectsSubtitle: "",
+      stackTitle: "Technologies",
       stackSubtitle: "Toolbox",
       totalEntries: "TOTAL_ENTRIES",
       accessRepo: "Repository",

@@ -1,15 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { FaReact, FaServer, FaPalette, FaRocket, FaCogs, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { skills as skillsData } from '../data/config';
 import { useLanguage } from '../context/LanguageContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const iconMap = { FaReact, FaServer, FaPalette, FaRocket, FaCogs };
 
 const categoryColors = {
-  "Frontend": "cyan",
-  "Backend": "yellow",
-  "UX/UI": "red",
-  "DevOps": "blue",
+  "Frontend": "blue",
+  "Backend": "indigo",
+  "UX/UI": "purple",
+  "DevOps": "cyan",
   "Tooling": "violet"
 };
 
@@ -35,195 +36,266 @@ export const GlassDeviceSkills = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const selectedSkill = useMemo(
-    () => skillsData.find(s => s.category === selectedId),
-    [selectedId]
-  );
-
-  const hudText = {
-    systemCore: language === 'es' ? 'Núcleo_Sistema // v2.0' : 'System_Core // v2.0',
-    dataStream: language === 'es' ? 'Flujo_Datos' : 'Data_Stream',
-    ready: language === 'es' ? 'LISTO_' : 'READY_',
-    close: language === 'es' ? '[ Cerrar ]' : '[ Close ]',
-    expand: language === 'es' ? '[ TOCAR PARA DETALLES ]' : '[ TAP FOR DETAILS ]'
-  };
-
-  // Objeto para mapear clases de Tailwind dinámicas (evita que se rompa el purgado)
-  const bgClasses = {
-    cyan: "bg-cyan-500",
-    yellow: "bg-yellow-500",
-    red: "bg-red-500",
-    blue: "bg-blue-500",
-    violet: "bg-violet-500"
-  };
-
-  const borderClasses = {
-    cyan: "bg-cyan-400",
-    yellow: "bg-yellow-400",
-    red: "bg-red-400",
-    blue: "bg-blue-400",
-    violet: "bg-violet-400"
-  };
+  const selectedSkill = skillsData.find(s => s.category === selectedId);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % skillsData.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + skillsData.length) % skillsData.length);
 
-  return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 md:min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center" id="stack">
-      <div className="absolute inset-0 opacity-[0.03] sm:opacity-[0.05] pointer-events-none" 
-           style={{ backgroundImage: `radial-gradient(#fff 1px, transparent 1px)`, backgroundSize: '50px 50px' }} />
-      
-      <div className="max-w-7xl mx-auto relative z-10 w-full">
-        <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-32 relative">
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 animate-fadeInLeft">
-            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse-glow" />
-            <span className="font-mono text-[8px] sm:text-[10px] tracking-[0.3em] text-green-500/60 uppercase">
-              {hudText.systemCore}
-            </span>
-          </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white tracking-tighter italic uppercase leading-none">
-            {t.ui.stackTitle}{' '}
-            <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}>
-              {t.ui.stackSubtitle}
-            </span>
-          </h2>
-          <div className="h-[2px] bg-white/10 mt-4 relative overflow-hidden animate-expandWidth">
-            <div className="absolute top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#22d3ee] animate-scanLine" />
-          </div>
-        </div>
+  const colorClasses = {
+    blue: {
+      bg: "from-blue-500/20 to-blue-600/20",
+      border: "border-blue-500/30",
+      text: "text-blue-400",
+      icon: "text-blue-400",
+      hover: "hover:border-blue-500/50"
+    },
+    indigo: {
+      bg: "from-indigo-500/20 to-indigo-600/20",
+      border: "border-indigo-500/30",
+      text: "text-indigo-400",
+      icon: "text-indigo-400",
+      hover: "hover:border-indigo-500/50"
+    },
+    purple: {
+      bg: "from-purple-500/20 to-purple-600/20",
+      border: "border-purple-500/30",
+      text: "text-purple-400",
+      icon: "text-purple-400",
+      hover: "hover:border-purple-500/50"
+    },
+    cyan: {
+      bg: "from-cyan-500/20 to-cyan-600/20",
+      border: "border-cyan-500/30",
+      text: "text-cyan-400",
+      icon: "text-cyan-400",
+      hover: "hover:border-cyan-500/50"
+    },
+    violet: {
+      bg: "from-violet-500/20 to-violet-600/20",
+      border: "border-violet-500/30",
+      text: "text-violet-400",
+      icon: "text-violet-400",
+      hover: "hover:border-violet-500/50"
+    }
+  };
 
-        {/* Carrusel Móvil */}
-        <div className="sm:hidden relative pb-8">
+  return (
+    <section className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 min-h-screen bg-slate-900 relative overflow-hidden flex items-center" id="stack">
+      {/* Fondo sutil */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#60a5fa 1px, transparent 1px)`, backgroundSize: '50px 50px' }} />
+      
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16 md:mb-24 text-center"
+        >
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-100 tracking-tight mb-4">
+            {t.ui.stackTitle}
+          </h2>
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            {language === 'es' 
+              ? 'Mis tecnologías y herramientas que domino para crear soluciones digitales'
+              : 'My technologies and tools I master to create digital solutions'}
+          </p>
+        </motion.div>
+
+        {/* Carrusel Mobile */}
+        <div className="md:hidden mb-12">
           <div className="overflow-hidden">
             <div className="flex transition-transform duration-500 ease-out" 
                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-              {skillsData.map((skill) => (
-                <div key={skill.category} className="w-full flex-shrink-0 px-4">
-                  <div onClick={() => setSelectedId(skill.category)} className="w-full max-w-xs mx-auto">
-                    <GlassDeviceVisual category={skill.category} iconName={skill.iconName} color={categoryColors[skill.category]} mobile={true} tapText={hudText.expand} />
+              {skillsData.map((skill) => {
+                const Icon = iconMap[skill.iconName];
+                const color = categoryColors[skill.category];
+                const colors = colorClasses[color];
+
+                return (
+                  <div key={skill.category} className="w-full flex-shrink-0 px-4">
+                    <div
+                      onClick={() => setSelectedId(skill.category)}
+                      className={`group relative bg-slate-800/50 backdrop-blur-sm border ${colors.border} rounded-2xl p-8 cursor-pointer transition-all duration-300 ${colors.hover} hover:bg-slate-800/70 max-w-sm mx-auto`}
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl`} />
+                      
+                      <div className="relative z-10 flex flex-col items-center text-center">
+                        <div className={`mb-4 ${colors.icon} group-hover:scale-110 transition-transform`}>
+                          {Icon && <Icon className="w-16 h-16" />}
+                        </div>
+                        
+                        <h3 className="text-xl font-bold text-slate-100 mb-3">
+                          {skill.category}
+                        </h3>
+
+                        <span className={`text-xs ${colors.text} font-medium`}>
+                          {language === 'es' ? 'Toca para ver detalles' : 'Tap for details'}
+                        </span>
+                      </div>
+
+                      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${colors.bg} opacity-0 group-hover:opacity-100 transition-opacity rounded-b-2xl`} />
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <button onClick={prevSlide} className="w-10 h-10 flex items-center justify-center border border-white/10 bg-zinc-900/50 rounded-full"><FaChevronLeft className="text-green-400" /></button>
-            <div className="flex gap-2">
-              {skillsData.map((_, i) => (<div key={i} className={`w-2 h-2 rounded-full transition-all ${currentSlide === i ? 'bg-green-400 w-6' : 'bg-white/20'}`} />))}
-            </div>
-            <button onClick={nextSlide} className="w-10 h-10 flex items-center justify-center border border-white/10 bg-zinc-900/50 rounded-full"><FaChevronRight className="text-green-400" /></button>
-          </div>
-        </div>
 
-        {/* Tablet Grid */}
-        <div className="hidden sm:grid lg:hidden grid-cols-2 gap-6 md:gap-8 max-w-2xl mx-auto pb-12">
-          {skillsData.map((skill, index) => (
-            <div key={skill.category} onClick={() => setSelectedId(skill.category)} className="animate-fadeInUp" style={{ animationDelay: `${index * 80}ms` }}>
-              <GlassDeviceVisual category={skill.category} iconName={skill.iconName} color={categoryColors[skill.category]} tablet={true} tapText={hudText.expand} />
-            </div>
-          ))}
-        </div>
-
-        {/* Desktop Grid */}
-        <div className="hidden lg:flex justify-center items-end gap-8 xl:gap-10 flex-wrap pt-16">
-          {skillsData.map((skill, index) => (
-            <div key={skill.category} onClick={() => setSelectedId(skill.category)} className="relative w-40 h-60 cursor-pointer group animate-fadeInUp" style={{ animationDelay: `${index * 80}ms` }}>
-              <GlassDeviceVisual category={skill.category} iconName={skill.iconName} color={categoryColors[skill.category]} tapText={hudText.expand} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal Corregido */}
-      {selectedId && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/90 backdrop-blur-md animate-fadeIn" onClick={() => setSelectedId(null)} />
-          <div className="relative w-full max-w-4xl bg-[#0a0c14] border border-white/10 shadow-2xl flex flex-col md:flex-row overflow-hidden animate-modalScale max-h-[90vh]">
+          {/* Controles del carrusel */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button 
+              onClick={prevSlide} 
+              className="w-10 h-10 flex items-center justify-center border border-slate-700/50 bg-slate-800/50 rounded-full hover:bg-slate-700/50 hover:border-blue-500/30 transition-all"
+            >
+              <FaChevronLeft className="text-blue-400 text-sm" />
+            </button>
             
-            {/* LADO IZQUIERDO: Dinámico por categoría */}
-            <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white/5 relative">
-              {/* FONDO DINÁMICO ARREGLADO */}
-              <div className={`absolute inset-0 opacity-10 ${bgClasses[categoryColors[selectedId]]}`} />
-              <div className={`absolute left-0 w-full h-[2px] z-20 ${borderClasses[categoryColors[selectedId]]} shadow-[0_0_15px_currentColor] animate-scanVerticalOnce`} />
-              
-              <div className="relative z-10 text-center">
-                {iconMap[selectedSkill.iconName] && React.createElement(iconMap[selectedSkill.iconName], {
-                    className: `w-16 h-16 sm:w-20 text-${categoryColors[selectedId]}-400 mb-6 mx-auto`,
-                })}
-                <h3 className="text-3xl sm:text-5xl font-black text-white uppercase italic mb-4">{selectedSkill.category}</h3>
-                <p className="text-zinc-300 text-sm leading-relaxed max-w-xs mx-auto">
-                  {categoryDescriptions[language][selectedId]}
-                </p>
-              </div>
-            </div>
-
-            {/* LADO DERECHO: Lista */}
-            <div className="w-full md:w-1/2 p-8 flex flex-col justify-center gap-4 bg-[#0d111a]">
-              <span className="font-mono text-[10px] text-green-500/60 tracking-widest uppercase mb-2">
-                {hudText.dataStream} // {selectedId}
-              </span>
-              {selectedSkill.items.map((item, i) => (
-                <div key={item} className="flex justify-between border-b border-white/5 pb-2 animate-slideInRight" style={{ animationDelay: `${200 + (i * 100)}ms` }}>
-                  <span className="text-zinc-200 text-sm">{item}</span>
-                  <span className="text-green-500/50 font-mono text-[10px] italic">{hudText.ready}</span>
-                </div>
+            <div className="flex gap-2">
+              {skillsData.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`h-2 rounded-full transition-all ${
+                    currentSlide === i ? 'bg-blue-400 w-8' : 'bg-slate-700 w-2'
+                  }`}
+                />
               ))}
             </div>
-
-            <button onClick={() => setSelectedId(null)} className="absolute top-4 right-4 text-white/30 hover:text-white font-mono text-[10px] uppercase">
-              {hudText.close}
+            
+            <button 
+              onClick={nextSlide} 
+              className="w-10 h-10 flex items-center justify-center border border-slate-700/50 bg-slate-800/50 rounded-full hover:bg-slate-700/50 hover:border-blue-500/30 transition-all"
+            >
+              <FaChevronRight className="text-blue-400 text-sm" />
             </button>
           </div>
         </div>
-      )}
 
-      <style>{`
-        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 10px #22c55e; } 50% { box-shadow: 0 0 20px #22c55e; } }
-        @keyframes scanLine { from { left: -100%; } to { left: 100%; } }
-        @keyframes scanVerticalOnce { 0% { top: -5%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: 105%; opacity: 0; } }
-        @keyframes expandWidth { from { width: 0; } to { width: 100%; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalScale { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        
-        .animate-scanVerticalOnce { animation: scanVerticalOnce 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
-        .animate-scanLine { animation: scanLine 3s linear infinite; }
-        .animate-expandWidth { animation: expandWidth 1s ease-out forwards; }
-        .animate-fadeInUp { animation: fadeInUp 0.5s ease-out forwards; animation-fill-mode: both; }
-        .animate-modalScale { animation: modalScale 0.4s ease-out forwards; }
-        .animate-slideInRight { animation: slideInRight 0.5s ease-out forwards; animation-fill-mode: both; }
-      `}</style>
-    </section>
-  );
-};
+        {/* Grid de Skills - Tablet y Desktop */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 max-w-6xl mx-auto mb-12">
+          {skillsData.map((skill, index) => {
+            const Icon = iconMap[skill.iconName];
+            const color = categoryColors[skill.category];
+            const colors = colorClasses[color];
 
-const GlassDeviceVisual = ({ category, iconName, color = "cyan", mobile, tablet, tapText }) => {
-  const Icon = iconMap[iconName];
-  const colorStyles = {
-    cyan: "hover:border-cyan-500/50 text-cyan-400",
-    yellow: "hover:border-yellow-500/50 text-yellow-400",
-    red: "hover:border-red-500/50 text-red-400",
-    blue: "hover:border-blue-500/50 text-blue-400",
-    violet: "hover:border-violet-500/50 text-violet-400"
-  };
+            return (
+              <motion.div
+                key={skill.category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                onClick={() => setSelectedId(skill.category)}
+                className={`group relative bg-slate-800/50 backdrop-blur-sm border ${colors.border} rounded-2xl p-8 cursor-pointer transition-all duration-300 ${colors.hover} hover:bg-slate-800/70`}
+              >
+                {/* Gradiente superior */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl`} />
+                
+                {/* Contenido */}
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <div className={`mb-4 ${colors.icon} group-hover:scale-110 transition-transform`}>
+                    {Icon && <Icon className="w-12 h-12" />}
+                  </div>
+                  
+                  <h3 className="text-lg font-bold text-slate-100 mb-3">
+                    {skill.category}
+                  </h3>
 
-  const sizeClasses = mobile ? "h-56" : tablet ? "h-64" : "w-full h-full";
+                  <span className={`text-xs ${colors.text} font-medium opacity-0 group-hover:opacity-100 transition-opacity`}>
+                    {language === 'es' ? 'Ver detalles →' : 'View details →'}
+                  </span>
+                </div>
 
-  return (
-    <div className={`${sizeClasses} rounded-lg border border-white/10 bg-zinc-900/40 backdrop-blur-md flex flex-col items-center justify-center p-6 relative overflow-hidden transition-all duration-300 cursor-pointer ${colorStyles[color]} group`}>
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
-      <div className="relative z-10 mb-3 group-hover:scale-110 transition-transform">
-        {Icon && <Icon className={`${mobile || tablet ? 'w-12' : 'w-10'} h-auto`} />}
+                {/* Borde inferior con glow */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${colors.bg} opacity-0 group-hover:opacity-100 transition-opacity rounded-b-2xl`} />
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
-      <span className="text-xs font-mono tracking-widest text-zinc-300 uppercase mb-4">{category}</span>
-      
-      {/* INDICADOR FIJO Y VISIBLE */}
-      <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-tighter opacity-70 group-hover:text-white transition-colors">
-        {tapText}
-      </span>
 
-      <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-current opacity-40 group-hover:opacity-100 shadow-[0_0_10px_currentColor]`} />
-    </div>
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedId && selectedSkill && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
+              onClick={() => setSelectedId(null)}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-4xl z-[110]"
+            >
+              <div className="bg-slate-900 border border-slate-700/50 rounded-3xl shadow-2xl overflow-hidden h-full md:h-auto max-h-[90vh] flex flex-col">
+                
+                {/* Header del Modal */}
+                <div className={`relative p-8 md:p-12 border-b border-slate-800/50 bg-gradient-to-br ${colorClasses[categoryColors[selectedId]].bg}`}>
+                  <button
+                    onClick={() => setSelectedId(null)}
+                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/50 rounded-full transition-all text-slate-400 hover:text-slate-200"
+                  >
+                    ✕
+                  </button>
+
+                  <div className="flex items-center gap-6">
+                    <div className={`w-16 h-16 flex items-center justify-center bg-slate-800/50 border ${colorClasses[categoryColors[selectedId]].border} rounded-2xl ${colorClasses[categoryColors[selectedId]].icon}`}>
+                      {iconMap[selectedSkill.iconName] && React.createElement(iconMap[selectedSkill.iconName], {
+                        className: "w-8 h-8"
+                      })}
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className="text-3xl md:text-4xl font-black text-slate-100 mb-2">
+                        {selectedSkill.category}
+                      </h3>
+                      <p className="text-slate-400 text-sm md:text-base max-w-2xl">
+                        {categoryDescriptions[language][selectedId]}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contenido del Modal */}
+                <div className="p-8 md:p-12 overflow-y-auto flex-1">
+                  <h4 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">
+                    {language === 'es' ? 'Tecnologías y herramientas' : 'Technologies & Tools'}
+                  </h4>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedSkill.items.map((item, i) => (
+                      <motion.div
+                        key={item}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.05 }}
+                        className="flex items-center gap-3 p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl hover:bg-slate-800/50 hover:border-slate-600/50 transition-all group"
+                      >
+                        <div className={`w-2 h-2 rounded-full ${colorClasses[categoryColors[selectedId]].text.replace('text-', 'bg-')}`} />
+                        <span className="text-slate-200 font-medium group-hover:text-slate-100 transition-colors">
+                          {item}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </section>
   );
 };

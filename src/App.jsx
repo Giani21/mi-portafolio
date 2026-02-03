@@ -19,12 +19,12 @@ export default function App() {
             <Hero />
           </div>
 
-          <div id="stack">
-            <GlassDeviceSkills />
-          </div>
-
           <div id="projects">
             <Projects />
+          </div>
+
+          <div id="stack">
+            <GlassDeviceSkills />
           </div>
 
           <div id="focus">

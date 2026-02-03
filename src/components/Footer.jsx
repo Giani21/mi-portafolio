@@ -1,10 +1,11 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaTerminal, FaCode } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from 'react-icons/fa';
 import { useLanguage } from '../context/LanguageContext';
 import { social } from '../data/config';
+import logo from '../assets/Logo.png';
 
 export const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   // Función para scroll suave a las secciones
@@ -18,110 +19,129 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-[#050505] pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 md:pb-10 overflow-hidden border-t border-white/5">
+    <footer className="relative bg-slate-950 pt-16 sm:pt-20 md:pt-24 pb-8 overflow-hidden border-t border-slate-800/50">
       {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-900 to-transparent" />
-        <div className="absolute -top-[100px] left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-green-500/5 blur-[80px] sm:blur-[120px] rounded-full mix-blend-screen" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/5 blur-[120px] rounded-full" />
       </div>
+
+      {/* Grid pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#60a5fa 1px, transparent 1px)`, backgroundSize: '50px 50px' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Main content grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 mb-10 sm:mb-12 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-12 mb-12 md:mb-16">
           
-          {/* Info de Perfil */}
-          <div className="sm:col-span-2 lg:col-span-5 space-y-4 sm:space-y-6">
+          {/* Brand & Info */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Logo & Name */}
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-zinc-900 border border-white/10 flex items-center justify-center rounded-sm shrink-0">
-                <FaTerminal className="text-green-500 text-sm sm:text-base" />
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+                <img src={logo} alt="Logo" className="w-7 h-7 object-contain brightness-0 invert" />
               </div>
               <div>
-                <h3 className="text-white font-bold tracking-wider text-base sm:text-lg">GIANFRANCO_A</h3>
-                <p className="text-green-500/70 text-[9px] sm:text-[10px] font-mono tracking-widest">FULL_STACK_DEV // OPERATOR</p>
+                <h3 className="text-slate-100 font-bold text-lg tracking-tight">
+                  {t.profile.name}
+                </h3>
+                <p className="text-blue-400 text-xs font-bold tracking-wider uppercase">
+                  Full-Stack Developer
+                </p>
               </div>
             </div>
             
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
               {t.profile.description}
             </p>
             
-            {/* Status indicator */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/5 border border-green-500/20 rounded-full">
+            {/* Status badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-full backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-green-500 font-bold tracking-wider">
-                {t.ui.serverStatus || "SYSTEMS ONLINE"}
+              <span className="text-xs font-bold text-blue-400 tracking-wide">
+                {language === 'es' ? 'Disponible para proyectos' : 'Available for projects'}
               </span>
             </div>
           </div>
 
-          {/* Navegación */}
+          {/* Navigation */}
           <div className="lg:col-span-3">
-            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6 flex items-center gap-2">
-              <span className="w-1 h-3 sm:h-4 bg-green-500 rounded-sm" />
-              {t.ui.footerNav || "NAVIGATION"}
+            <h4 className="text-slate-100 font-bold text-sm mb-6 flex items-center gap-2">
+              <div className="w-1 h-5 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+              {language === 'es' ? 'Navegación' : 'Navigation'}
             </h4>
-            <ul className="space-y-3 sm:space-y-4">
-              {['home', 'stack', 'projects'].map((item) => (
-                <li key={item}>
+            <ul className="space-y-3">
+              {[
+                { id: 'home', label: language === 'es' ? 'Inicio' : 'Home' },
+                { id: 'stack', label: language === 'es' ? 'Habilidades' : 'Skills' },
+                { id: 'projects', label: language === 'es' ? 'Proyectos' : 'Projects' },
+                { id: 'contact', label: language === 'es' ? 'Contacto' : 'Contact' }
+              ].map((item) => (
+                <li key={item.id}>
                   <button 
-                    onClick={() => scrollToSection(item)}
-                    className="text-zinc-400 hover:text-green-400 hover:translate-x-2 transition-all duration-300 flex items-center gap-2 text-xs sm:text-sm group"
+                    onClick={() => scrollToSection(item.id)}
+                    className="text-slate-400 hover:text-blue-400 transition-colors text-sm font-medium group flex items-center gap-2"
                   >
-                    <FaCode className="text-[9px] sm:text-[10px] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <span className="uppercase tracking-wider font-mono">{item}</span>
+                    <span className="w-0 h-px bg-blue-400 group-hover:w-4 transition-all duration-300" />
+                    {item.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Conexión y Redes */}
-          <div className="sm:col-span-2 lg:col-span-4">
-            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6 flex items-center gap-2">
-              <span className="w-1 h-3 sm:h-4 bg-purple-500 rounded-sm" />
-              {t.ui.footerConnect || "CONNECT"}
+          {/* Connect */}
+          <div className="md:col-span-2 lg:col-span-4">
+            <h4 className="text-slate-100 font-bold text-sm mb-6 flex items-center gap-2">
+              <div className="w-1 h-5 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full" />
+              {language === 'es' ? 'Conecta' : 'Connect'}
             </h4>
             
             {/* Social buttons */}
-            <div className="flex flex-wrap gap-3 sm:gap-4">
+            <div className="flex flex-wrap gap-3 mb-6">
               <SocialButton href={social.github} icon={FaGithub} label="GitHub" />
               <SocialButton href={social.linkedin} icon={FaLinkedin} label="LinkedIn" />
+              <SocialButton href="https://instagram.com/giani.cap" icon={FaInstagram} label="Instagram" gradient />
               
               {/* Email button - scrolls to contact form */}
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 rounded-sm overflow-hidden"
+                className="group relative flex items-center justify-center w-11 h-11 bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 hover:bg-slate-700/50 transition-all rounded-xl overflow-hidden"
                 aria-label="Contact Form"
               >
-                <FaEnvelope className="text-zinc-400 group-hover:text-green-400 text-lg sm:text-xl relative z-10 transition-transform group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <FaEnvelope className="text-slate-400 group-hover:text-blue-400 text-lg relative z-10 transition-colors" />
               </button>
             </div>
 
-            {/* Terminal code block */}
-            <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-zinc-900/50 border border-white/5 rounded-sm">
-              <code className="text-[9px] sm:text-[10px] text-zinc-500 font-mono block leading-relaxed">
-                $ git commit -m "Initial_Commit"<br/>
-                $ git push origin master<br/>
-                <span className="text-green-500">Success...</span>
-              </code>
+            {/* Info card */}
+            <div className="p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl">
+              <p className="text-xs text-slate-500 mb-2 font-medium">
+                {language === 'es' ? 'Ubicación' : 'Location'}
+              </p>
+              <p className="text-sm text-slate-300 font-medium">
+                Buenos Aires, Argentina
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-white/5 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-center sm:text-left">
-          <p className="text-zinc-500 text-[10px] sm:text-xs font-mono">
-            © {currentYear} Gianfranco Andreachi. {t.ui.footerRights || "All rights reserved"}.
+        {/* Bottom bar */}
+        <div className="border-t border-slate-800/50 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+          <p className="text-slate-500 text-xs">
+            © {currentYear} {t.profile.name}. {language === 'es' ? 'Todos los derechos reservados' : 'All rights reserved'}.
           </p>
           
-          {/* Mobile indicator - only on small screens */}
-          <div className="sm:hidden flex items-center gap-2 text-[9px] font-mono text-zinc-600">
-            <div className="w-1 h-1 rounded-full bg-green-500/50" />
-            <span>v1.0.0</span>
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-slate-600">
+              {language === 'es' ? 'Hecho con' : 'Made with'} React + Tailwind
+            </span>
+            <div className="w-px h-4 bg-slate-800" />
+            <span className="text-xs text-slate-600 font-mono">
+              v1.0.0
+            </span>
           </div>
         </div>
       </div>
@@ -129,15 +149,25 @@ export const Footer = () => {
   );
 };
 
-const SocialButton = ({ href, icon: Icon, label }) => (
+const SocialButton = ({ href, icon: Icon, label, gradient }) => (
   <a 
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="group relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 bg-zinc-900 border border-zinc-800 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300 rounded-sm overflow-hidden"
+    className={`group relative flex items-center justify-center w-11 h-11 border transition-all rounded-xl overflow-hidden ${
+      gradient 
+        ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 border-transparent hover:scale-105' 
+        : 'bg-slate-800/50 border-slate-700/50 hover:border-blue-500/50 hover:bg-slate-700/50'
+    }`}
     aria-label={label}
   >
-    <Icon className="text-zinc-400 group-hover:text-green-400 text-lg sm:text-xl relative z-10 transition-transform group-hover:scale-110" />
-    <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+    <Icon className={`text-lg relative z-10 transition-all ${
+      gradient 
+        ? 'text-white' 
+        : 'text-slate-400 group-hover:text-blue-400 group-hover:scale-110'
+    }`} />
+    {!gradient && (
+      <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/0 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+    )}
   </a>
 );
