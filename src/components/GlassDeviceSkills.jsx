@@ -69,7 +69,7 @@ export const GlassDeviceSkills = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + skillsData.length) % skillsData.length);
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center" id="stack">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 md:min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center" id="stack">
       <div className="absolute inset-0 opacity-[0.03] sm:opacity-[0.05] pointer-events-none" 
            style={{ backgroundImage: `radial-gradient(#fff 1px, transparent 1px)`, backgroundSize: '50px 50px' }} />
       
