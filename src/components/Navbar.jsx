@@ -8,18 +8,18 @@ import {
   FaBars,
   FaTimes,
   FaTerminal,
-  FaInstagram
+  FaInstagram,
+  FaWhatsapp,
+  FaBullseye // Icono para "Enfoque"
 } from 'react-icons/fa';
 import logo from '../assets/Logo.png';
-import { s } from 'framer-motion/client';
 
-export const Navbar = () => {
+export const Navbar = ({ onMobileNav }) => {
   const { language, toggleLanguage, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // 1. Bloqueo de scroll en el body cuando el menú está abierto
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
@@ -31,23 +31,28 @@ export const Navbar = () => {
     };
   }, [menuOpen]);
 
-  // 2. Lógica de scroll y detección de secciones activa
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
+      // Elementos para detección de scroll en Desktop
       const contact = document.getElementById('contact');
       const projects = document.getElementById('projects');
       const stack = document.getElementById('stack');
+      const focus = document.getElementById('focus'); // Nueva sección Enfoque
 
-      if (contact && window.scrollY >= contact.offsetTop - 300) {
-        setActiveTab('contact');
-      } else if (stack && window.scrollY >= stack.offsetTop - 300) {
-        setActiveTab('stack');
-      } else if (projects && window.scrollY >= projects.offsetTop - 300) {
-        setActiveTab('projects');
-      } else {
-        setActiveTab('home');
+      if (window.innerWidth >= 1024) { 
+          if (contact && window.scrollY >= contact.offsetTop - 300) {
+            setActiveTab('contact');
+          } else if (focus && window.scrollY >= focus.offsetTop - 300) {
+            setActiveTab('focus');
+          } else if (stack && window.scrollY >= stack.offsetTop - 300) {
+            setActiveTab('stack');
+          } else if (projects && window.scrollY >= projects.offsetTop - 300) {
+            setActiveTab('projects');
+          } else {
+            setActiveTab('home');
+          }
       }
     };
 
@@ -56,17 +61,33 @@ export const Navbar = () => {
   }, []);
 
   const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-    setActiveTab(id);
-    setMenuOpen(false);
+    // Lógica Mobile SPA
+    if (window.innerWidth < 1024) {
+        if (onMobileNav) {
+            onMobileNav(id); 
+        }
+        setActiveTab(id);
+        setMenuOpen(false);
+        window.scrollTo(0, 0);
+    } else {
+        // Lógica Desktop Scroll
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        setActiveTab(id);
+        setMenuOpen(false);
+    }
   };
 
+  // Agregada la sección ENFOQUE
   const navItems = [
     { id: 'home', label: language === 'es' ? 'INICIO' : 'HOME', icon: FaHome },
     { id: 'projects', label: language === 'es' ? 'PROYECTOS' : 'PROJECTS', icon: FaFolder },
     { id: 'stack', label: language === 'es' ? 'HABILIDADES' : 'SKILLS', icon: FaTerminal },
+    { id: 'focus', label: language === 'es' ? 'ENFOQUE' : 'FOCUS', icon: FaBullseye },
   ];
+
+  // Estilo base para los botones del móvil
+  const mobileButtonStyle = "lg:hidden w-10 h-10 flex items-center justify-center bg-slate-800/50 border border-slate-700/50 text-blue-400 rounded-xl hover:bg-slate-700/50 hover:border-blue-500/30 transition-all";
 
   return (
     <>
@@ -136,8 +157,10 @@ export const Navbar = () => {
               ))}
             </div>
 
-            {/* Right Section Desktop */}
+            {/* Right Section */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              
+              {/* Desktop Contact Button */}
               <motion.button
                 onClick={() => scrollToSection('contact')}
                 className="hidden md:flex items-center justify-center gap-2 px-6 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full font-bold text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:from-blue-600 hover:to-blue-700 transition-all relative overflow-hidden group"
@@ -149,6 +172,7 @@ export const Navbar = () => {
                 <span className="relative z-10">{t.profile.buttonContact}</span>
               </motion.button>
 
+              {/* Language Selector Desktop */}
               <div className="hidden sm:flex items-center bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden p-1">
                 <button
                   onClick={() => language === 'en' && toggleLanguage()}
@@ -172,20 +196,54 @@ export const Navbar = () => {
                 </button>
               </div>
 
-              {/* Botón menú mobile */}
+              {/* ----- BOTONES MÓVILES (Whatsapp, Instagram, Mail, Menú) ----- */}
+              
+              {/* WhatsApp Mobile */}
+              <motion.a
+                href="https://wa.me/5491134873055" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className={mobileButtonStyle}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaWhatsapp className="text-lg" />
+              </motion.a>
+
+              {/* Instagram Mobile (Movido aquí desde el menú) */}
+              <motion.a
+                href="https://instagram.com/giani.cap"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={mobileButtonStyle}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaInstagram className="text-lg" />
+              </motion.a>
+
+              {/* Mail Mobile */}
+              <motion.button
+                onClick={() => scrollToSection('contact')}
+                className={mobileButtonStyle}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaEnvelope className="text-sm" />
+              </motion.button>
+
+              {/* Hamburger Mobile */}
               <motion.button
                 onClick={() => setMenuOpen(true)}
-                className="lg:hidden w-10 h-10 flex items-center justify-center bg-slate-800/50 border border-slate-700/50 text-blue-400 rounded-xl hover:bg-slate-700/50 hover:border-blue-500/30 transition-all"
+                className={mobileButtonStyle}
                 whileTap={{ scale: 0.9 }}
               >
                 <FaBars className="text-sm" />
               </motion.button>
+
             </div>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {menuOpen && (
           <>
@@ -249,21 +307,10 @@ export const Navbar = () => {
                 <div className="h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
 
                 <div className="space-y-4">
-                  {/* Instagram Button */}
-                  <motion.a
-                    href="https://instagram.com/giani.cap"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-2xl font-bold text-sm shadow-xl shadow-pink-500/20 hover:shadow-pink-500/30 transition-all relative overflow-hidden group"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                    <FaInstagram className="text-lg relative z-10" />
-                    <span className="relative z-10">INSTAGRAM</span>
-                  </motion.a>
+                  
+                  {/* El botón de Instagram grande se eliminó de aquí porque subió a la barra principal */}
 
-                  {/* Language Selector */}
+                  {/* Language Selector Mobile */}
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => language === 'en' && toggleLanguage()}
