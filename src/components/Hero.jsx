@@ -1,6 +1,6 @@
 import React, { useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { FaArrowDown, FaGlobe, FaMobileAlt, FaCode, FaCheckCircle } from 'react-icons/fa';
+import { FaArrowDown, FaGlobe, FaMobileAlt, FaCode, FaCheckCircle, FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa'; // Agregamos iconos sociales
 import { 
   SiTailwindcss, SiTypescript, SiJavascript, 
   SiFigma, SiGit, SiGithub
@@ -8,7 +8,7 @@ import {
 
 import { useLanguage } from '../context/LanguageContext';
 
-// Icono de Misión Único: Representa Visión + Estrategia de Crecimiento
+// Icono de Misión Único
 const MissionIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -101,7 +101,7 @@ export const Hero = () => {
               </p>
             </div>
 
-            {/* Sección de Misión con SVG Único */}
+            {/* Sección de Misión */}
             <div className="mb-10 bg-blue-500/10 p-6 rounded-3xl border border-blue-500/20 max-w-2xl backdrop-blur-sm shadow-lg shadow-blue-500/5">
               <div className="flex items-center gap-3 mb-3 text-blue-400">
                 <MissionIcon />
@@ -114,7 +114,10 @@ export const Hero = () => {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* --- MODIFICACIÓN AQUÍ --- */}
+
+            {/* 1. VISTA DE ESCRITORIO (Botones Grandes) - hidden en mobile */}
+            <div className="hidden md:flex flex-col sm:flex-row gap-4">
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
@@ -132,10 +135,47 @@ export const Hero = () => {
                 {t.profile.buttonStack}
               </button>
             </div>
+
+            {/* 2. VISTA MÓVIL (Redes Sociales Minimalistas) - Solo visible en mobile */}
+            <div className="md:hidden flex items-center gap-6 mt-4">
+               {/* GitHub */}
+               <motion.a 
+                 href="https://github.com/Giani2110" 
+                 target="_blank" rel="noopener noreferrer"
+                 whileTap={{ scale: 0.9 }}
+                 className="text-slate-400 hover:text-white transition-colors"
+               >
+                 <FaGithub size={28} />
+               </motion.a>
+
+               {/* LinkedIn */}
+               <motion.a 
+                 href="https://www.linkedin.com/in/gianfranco-andreachi-a42043260/" 
+                 target="_blank" rel="noopener noreferrer"
+                 whileTap={{ scale: 0.9 }}
+                 className="text-slate-400 hover:text-blue-400 transition-colors"
+               >
+                 <FaLinkedin size={28} />
+               </motion.a>
+
+               {/* Instagram */}
+               <motion.a 
+                 href="https://instagram.com/giani.cap" 
+                 target="_blank" rel="noopener noreferrer"
+                 whileTap={{ scale: 0.9 }}
+                 className="text-slate-400 hover:text-pink-400 transition-colors"
+               >
+                 <FaInstagram size={28} />
+               </motion.a>
+
+               <div className="h-px w-12 bg-slate-700 ml-2"></div>
+               <span className="text-xs text-slate-500 font-medium tracking-widest">REDES</span>
+            </div>
+
           </motion.div>
         </div>
 
-        {/* LADO DERECHO: TARJETAS DE BENEFICIOS */}
+        {/* LADO DERECHO: TARJETAS DE BENEFICIOS (Solo Desktop) */}
         <div className="xl:col-span-5 hidden xl:grid grid-cols-2 gap-4">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
