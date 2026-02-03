@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Importamos useState
+import React, { useState } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -15,6 +15,7 @@ export default function App() {
     <LanguageProvider>
       <div className="bg-zinc-900 text-zinc-100 min-h-screen overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-100 flex flex-col">
 
+        {/* Navbar siempre visible */}
         <Navbar onMobileNav={setMobileSection} />
         
         <main className="flex-grow">
@@ -56,9 +57,10 @@ export default function App() {
 
         </main>
 
-        <div className={mobileSection === 'home' ? 'block' : 'hidden lg:block'}>
-             <Footer />
-        </div>
+        {/* FOOTER SIEMPRE VISIBLE */}
+        {/* Eliminamos el div con la condición 'hidden' */}
+        <Footer onMobileNav={setMobileSection} />
+        
       </div>
     </LanguageProvider>
   );

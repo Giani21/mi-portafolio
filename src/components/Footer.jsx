@@ -4,17 +4,27 @@ import { useLanguage } from '../context/LanguageContext';
 import { social } from '../data/config';
 import logo from '../assets/Logo.png';
 
-export const Footer = () => {
+// 1. Recibimos la prop onMobileNav
+export const Footer = ({ onMobileNav }) => {
   const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
 
-  // Función para scroll suave a las secciones
+  // 2. Actualizamos la función de navegación
   const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - 100;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    // Lógica Móvil (SPA)
+    if (window.innerWidth < 1024) {
+      if (onMobileNav) {
+        onMobileNav(id); // Cambia la vista
+      }
+      window.scrollTo(0, 0); // Vuelve arriba
+    } else {
+      // Lógica Desktop (Scroll suave original)
+      const element = document.getElementById(id);
+      if (element) {
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - 100;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      }
     }
   };
 
@@ -78,6 +88,8 @@ export const Footer = () => {
                 { id: 'home', label: language === 'es' ? 'Inicio' : 'Home' },
                 { id: 'stack', label: language === 'es' ? 'Habilidades' : 'Skills' },
                 { id: 'projects', label: language === 'es' ? 'Proyectos' : 'Projects' },
+                // Agregué Enfoque para que coincida con el Navbar
+                { id: 'focus', label: language === 'es' ? 'Enfoque' : 'Focus' },
                 { id: 'contact', label: language === 'es' ? 'Contacto' : 'Contact' }
               ].map((item) => (
                 <li key={item.id}>
@@ -106,7 +118,7 @@ export const Footer = () => {
               <SocialButton href={social.linkedin} icon={FaLinkedin} label="LinkedIn" />
               <SocialButton href="https://instagram.com/giani.cap" icon={FaInstagram} label="Instagram" gradient />
               
-              {/* Email button - scrolls to contact form */}
+              {/* Email button */}
               <button 
                 onClick={() => scrollToSection('contact')}
                 className="group relative flex items-center justify-center w-11 h-11 bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 hover:bg-slate-700/50 transition-all rounded-xl overflow-hidden"

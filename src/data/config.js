@@ -3,7 +3,7 @@ export const content = {
     profile: {
       name: "Gianfranco Andreachi",
       role: "Full-Stack - Analista en Sistemas",
-      description: "Desarrollo paginas y aplicaciones web para comercios y empresas.",
+      description: "Desarrollo páginas y aplicaciones web para comercios y empresas.",
       buttonContact: "Contactarme",
       buttonStack: "Mis Herramientas"
     },
