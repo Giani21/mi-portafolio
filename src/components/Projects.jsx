@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate, useMotionValueEvent } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt } from 'react-icons/fa';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -50,86 +50,68 @@ export const Projects = () => {
 };
 
 const CarouselView = ({ projects, t }) => {
-  const [width, setWidth] = useState(0);
-  const carouselRef = useRef();
-  const x = useMotionValue(0);
+  const carouselRef = useRef(null);
   const [currentProgress, setCurrentProgress] = useState(0);
 
-  useEffect(() => {
-    const calculateWidth = () => {
-      if (carouselRef.current) {
-        // Agregamos un pequeño padding extra para asegurar que el último proyecto sea completamente visible
-        const scrollWidth = carouselRef.current.scrollWidth;
-        const offsetWidth = carouselRef.current.offsetWidth;
-        setWidth(scrollWidth - offsetWidth);
+  // Función para manejar el scroll y actualizar la barra de progreso
+  const handleScroll = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      
+      // Evitar división por cero
+      if (maxScroll > 0) {
+        const p = (scrollLeft / maxScroll) * 100;
+        setCurrentProgress(Math.min(Math.max(p, 0), 100));
       }
-    };
-
-    calculateWidth();
-    // Recalcular en resize para estar seguros
-    window.addEventListener('resize', calculateWidth);
-    return () => window.removeEventListener('resize', calculateWidth);
-  }, [projects]);
-
-  useMotionValueEvent(x, "change", (latest) => {
-    if (width > 0) {
-      const p = Math.abs(latest / width) * 100;
-      setCurrentProgress(Math.min(Math.max(p, 0), 100));
     }
-  });
+  };
 
   const slide = (direction) => {
-    const currentX = x.get();
-    const moveAmount = window.innerWidth < 640 ? 320 : 500;
-    let newX = direction === 'left' ? currentX + moveAmount : currentX - moveAmount;
-
-    if (newX > 0) newX = 0;
-    if (newX < -width) newX = -width;
-
-    animate(x, newX, { 
-      type: "spring", 
-      stiffness: 200,
-      damping: 25, 
-      mass: 0.5 
-    });
+    if (carouselRef.current) {
+      const scrollAmount = window.innerWidth < 640 ? 340 : 500; // Ajustado al tamaño de las tarjetas aprox
+      const targetScroll = carouselRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+      
+      carouselRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
-    <div className="relative">
-      <div className="overflow-hidden pb-2" ref={carouselRef}>
-        <motion.div
-          drag="x"
-          dragConstraints={{ right: 0, left: -width }}
-          dragElastic={0.1}
-          dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
-          style={{ x }}
-          whileTap={{ cursor: "grabbing" }}
-          className="flex gap-6 md:gap-8 cursor-grab pr-4"
-        >
-          {projects.map((project, index) => (
-            <div 
-              key={project.id} 
-              className="min-w-[85vw] xs:min-w-[80vw] sm:min-w-[70vw] md:min-w-[450px] shrink-0 last:pr-4"
-            >
-              <ProjectCard project={project} index={index} t={t} />
-            </div>
-          ))}
-        </motion.div>
+    <div className="relative group/carousel">
+      {/* Contenedor con Scroll Nativo pero barra oculta */}
+      <div 
+        ref={carouselRef}
+        onScroll={handleScroll}
+        className="overflow-x-auto flex gap-6 md:gap-8 pb-8 px-4 -mx-4 scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {projects.map((project, index) => (
+          <div 
+            key={project.id} 
+            className="min-w-[85vw] xs:min-w-[80vw] sm:min-w-[70vw] md:min-w-[450px] shrink-0 snap-center first:pl-2 last:pr-2"
+          >
+            <ProjectCard project={project} index={index} t={t} />
+          </div>
+        ))}
       </div>
 
       {/* Controles */}
-      <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      <div className="mt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         
         {/* Barra de progreso */}
         <div className="flex-1 max-w-md">
           <div className="flex justify-between text-xs text-slate-500 mb-2">
             <span>{Math.round(currentProgress)}%</span>
-            <span>{projects.length} proyectos</span>
+            <span>{projects.length} {t.ui.totalEntries || 'proyectos'}</span>
           </div>
           <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
             <motion.div 
               className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
-              style={{ width: `${currentProgress}%` }} 
+              // Usamos animate aquí para que el movimiento de la barra sea suave aunque el scroll sea rápido
+              animate={{ width: `${currentProgress}%` }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
             />
           </div>
         </div>
@@ -138,7 +120,7 @@ const CarouselView = ({ projects, t }) => {
         <div className="flex items-center gap-3 justify-center sm:justify-end">
           <button 
             onClick={() => slide('left')}
-            className="px-6 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl hover:bg-slate-700/50 hover:border-blue-500/30 transition-all text-slate-300 hover:text-slate-100 flex items-center gap-2"
+            className="px-6 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl hover:bg-slate-700/50 hover:border-blue-500/30 transition-all text-slate-300 hover:text-slate-100 flex items-center gap-2 active:scale-95"
           >
             <FaChevronLeft className="text-sm" />
             <span className="hidden md:inline text-sm font-medium">Anterior</span>
@@ -146,7 +128,7 @@ const CarouselView = ({ projects, t }) => {
 
           <button 
             onClick={() => slide('right')}
-            className="px-6 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl hover:bg-slate-700/50 hover:border-blue-500/30 transition-all text-slate-300 hover:text-slate-100 flex items-center gap-2"
+            className="px-6 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl hover:bg-slate-700/50 hover:border-blue-500/30 transition-all text-slate-300 hover:text-slate-100 flex items-center gap-2 active:scale-95"
           >
             <span className="hidden md:inline text-sm font-medium">Siguiente</span>
             <FaChevronRight className="text-sm" />
